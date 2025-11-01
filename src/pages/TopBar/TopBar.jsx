@@ -22,9 +22,10 @@ const BOTTOM_NAV = [
     key: "current",
     label: "Current Affairs",
     dropdown: [
-      { label: "National", href: "#" },
-      { label: "International", href: "#" },
-      { label: "State", href: "#" },
+      { label: "National", href: "/currentaffairs" },
+      { label: "International", href: "/currentaffairs" },
+      { label: "State", href: "currentaffairs" },
+      
     ],
   },
   {
