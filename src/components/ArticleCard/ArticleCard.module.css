@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.card {
+    display: flex;
+    gap: 18px;
+    background: #fff;
+    border-radius: 6px;
+    padding: 18px;
+    align-items: flex-start;
+    position: relative;
+    box-shadow: 0 10px 22px rgba(19, 27, 51, 0.06);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(19, 27, 51, 0.08);
+}
+
+.media {
+    flex: 0 0 160px;
+    max-width: 160px;
+}
+
+.thumb {
+    width: 100%;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+}
+
+.thumbPlaceholder {
+    width: 160px;
+    height: 96px;
+    background: #f0f2f7;
+    border-radius: 4px;
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+}
+
+.title {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.titleBtn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: #2a56a8;
+    text-decoration: underline;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
+
+.excerpt {
+    margin: 0;
+    color: #222;
+    opacity: 0.9;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.time {
+    color: #444;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+/* tag bubble (top-right) */
+.tag {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    background: #bfcdf5;
+    color: #1f3472;
+    padding: 8px 14px;
+    border-radius: 26px;
+    font-weight: 600;
+    font-size: 13px;
+    box-shadow: 0 8px 18px rgba(31, 52, 114, 0.06);
+}
+
+/* Responsive */
+@media (max-width: 760px) {
+    .card {
+        flex-direction: column;
+    }
+
+    .media {
+        width: 100%;
+        max-width: none;
+    }
+
+    .thumb {
+        height: 160px;
+    }
+
+    .row {
+        justify-content: space-between;
+    }
+
+    .tag {
+        top: auto;
+        right: 18px;
+        bottom: 18px;
+    }
+}

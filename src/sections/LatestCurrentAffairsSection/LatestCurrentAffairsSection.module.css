@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.section {
+    width: 100%;
+    padding: 48px 56px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    background: transparent;
+
+    /* center content horizontally while keeping header/subtitle left-aligned inside max width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* keep header and subtitle inside a centered max-width column */
+.headerRow,
+.subtitle {
+    width: 100%;
+    max-width: 1180px;
+   
+    /* controls content width; adjust as needed */
+    box-sizing: border-box;
+}
+
+/* Header Row */
+.headerRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.heading {
+    font-size: 22px;
+    color: var(--Primary_Color, #1F4D9D);
+    font-weight: 600;
+    margin: 0;
+}
+
+.headingUnderline {
+    display: inline-block;
+    height: 4px;
+    width: 80px;
+    background: var(--Primary_Color, #1F4D9D);
+    border-radius: 2px;
+}
+
+.subtitle {
+    color: var(--Black_Color);
+    font-weight: 500;
+    margin: 8px 0 24px 0;
+    font-size: var(--Font_Size_6);
+    line-height: 1.6;
+}
+
+/* ---------- CENTERED CARDS GRID ---------- */
+/* Use a fixed column width so three cards align exactly centered.
+   Using flex allows perfect centering and graceful wrapping on narrow screens. */
+.grid {
+    display: flex;
+    justify-content: center;
+    /* center the row of cards */
+    gap: 28px;
+    width: 100%;
+    max-width: 1180px;
+    /* same width as text area so cards align with header */
+    box-sizing: border-box;
+    align-items: flex-start;
+    margin: 0 auto 8px auto;
+    padding: 12px 0;
+}
+
+/* allow each card to keep the width defined by the card component (e.g. 320px) */
+.cardWrapper {
+    display: block;
+    width: 320px;
+    /* match CurrentAffairsCard width */
+}
+
+/* color overrides for cards (these rely on CurrentAffairsCard setting header styles via className) */
+.pink .header {
+    background: var(--Utility_Color3, #FAADC1);
+}
+
+.blue .header {
+    background: var(--Utility_Color1, #9BE1EF);
+}
+
+.green .header {
+    background: var(--Utility_Color2, #8DD6C6);
+}
+
+/* responsive: 2 columns */
+@media (max-width: 1100px) {
+    .grid {
+        gap: 20px;
+        max-width: 900px;
+    }
+
+    .cardWrapper {
+        width: calc(50% - 10px);
+        max-width: 420px;
+    }
+
+    /* allow cards to be fluid */
+    .section {
+        padding: 36px 28px;
+    }
+}
+
+/* responsive: 1 column on small screens */
+@media (max-width: 760px) {
+    .grid {
+        flex-direction: column;
+        gap: 18px;
+        align-items: center;
+        max-width: 480px;
+        padding: 0;
+    }
+
+    .cardWrapper {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .section {
+        padding: 20px 16px;
+    }
+
+    .subtitle {
+        color: var(--Black_Color);
+            font-weight: 500;
+            /* margin: 8px 0 24px 0; */
+            font-size: var(--Font_Size_4);
+    }
+}

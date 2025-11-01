@@ -1,0 +1,181 @@
+/* LanguageSelector.module.css
+   Uses theme variables from index.css:
+   --Font_Family, --Font_Size_2 or --Font_Size_3, --Utility_Color2 (active)
+   You can change --Lang_Inactive to your preferred inactive bg.
+*/
+
+/* Configure these in your index.css if you want different colors:
+   --Utility_Color2: active green (required)
+   --Lang_Inactive: inactive light-blue (optional fallback provided below)
+*/
+:root {
+    /* fallback (only used if you haven't defined these in index.css) */
+    --Lang_Inactive: #7ED5F3;
+}
+
+/* Outer capsule */
+.wrapper {
+    display: inline-flex;
+    align-items: stretch;
+    border-radius: 999px;
+    overflow: visible;
+    /* we will manage clip with child corners */
+    height: 40px;
+    /* compact height — tweak if needed */
+    min-width: 320px;
+    /* reserve space so header doesn't shift; adjust if required */
+    box-sizing: border-box;
+    background: transparent;
+    /* let header show through between separators */
+    font-family: var(--Font_Family);
+}
+
+/* Each tab equals share */
+.tab {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 90px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border: none;
+    cursor: pointer;
+    background: var(--Lang_Inactive, #7ED5F3);
+    /* default inactive fill for whole capsule cell */
+    color: rgba(4, 90, 112, 0.9);
+    /* default inactive text (teal) */
+    font-size: var(--Font_Size_4, 15px);
+    font-weight: 700;
+    line-height: 1;
+    transition: transform 160ms ease, background 180ms ease;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+/* make first/last corners rounded so capsule silhouette is preserved */
+.first {
+    border-top-left-radius: 999px;
+    border-bottom-left-radius: 999px;
+}
+
+.last {
+    border-top-right-radius: 999px;
+    border-bottom-right-radius: 999px;
+}
+
+/* Active tab: draw full-height active block
+   We overlay an absolutely-positioned color block inside the tab so it visually fills exactly.
+   This keeps the tab's own background for separators and ensures no clipping at edges.
+*/
+.tab .activeFill,
+.tab .label {
+    position: relative;
+    z-index: 2;
+}
+
+/* Instead of an extra element in DOM we style the active state via pseudo-element */
+.tab.active::before {}
+
+/* Applying active via class on .tab */
+.tab.active,
+.tab.active:not(.first):not(.last) {
+    /* For simplicity we keep using the tab background as active color */
+}
+
+/* But we actually set .active to use the theme active color */
+.active {
+    background:  #26B697;
+    color: #fff;
+    /* transform: translateY(-3px); */
+    box-shadow: 0 8px 18px rgba(25, 80, 70, 0.12);
+    z-index: 3;
+}
+
+/* IMPORTANT: diagonal separators are drawn by the NEXT tab (::before),
+   so they sit visually between cells and do not change layout.
+   We draw a thin slanted stroke, not a big block.
+*/
+.tab+.tab::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    /* thin line */
+    height: 100%;
+    background: rgba(2, 10, 30, 0.16);
+    /* dark line to match reference */
+    transform-origin: top left;
+    transform: skewY(-20deg);
+    /* slant the line */
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* When the left tab is active make the line slightly darker to match the reference */
+.active+.tab::before {
+    background: rgba(2, 10, 30, 0.16);
+}
+
+/* Label visual */
+.label {
+    pointer-events: none;
+}
+
+/* Hover for inactive tabs: tiny lift but keep widths same */
+.tab:not(.active):hover {
+    /* transform: translateY(-2px); */
+    filter: brightness(1.02);
+}
+
+/* Focus style for accessibility */
+.tab:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(37, 100, 250, 0.08);
+    z-index: 5;
+}
+
+/* Responsive adjustments — shrink gracefully and allow horizontal scroll on very small screens */
+@media (max-width: 900px) {
+    .wrapper {
+        min-width: 260px;
+        height: 36px;
+    }
+
+    .tab {
+        padding: 0 10px;
+        font-size: calc(var(--Font_Size_2, 15px) - 1px);
+        min-width: 80px;
+    }
+
+    .tab+.tab::before {
+        /* transform: skewY(-16deg); */
+        width: 1.8px;
+    }
+
+    .active {
+        /* transform: translateY(-2px); */
+    }
+}
+
+@media (max-width: 520px) {
+    .wrapper {
+        min-width: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 6px;
+    }
+
+    .tab {
+        min-width: 86px;
+        height: 34px;
+    }
+
+    .tab+.tab::before {
+        left: 0;
+        /* transform: skewY(-14deg); */
+        width: 1.4px;
+    }
+}

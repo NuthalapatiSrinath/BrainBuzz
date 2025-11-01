@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.pageWrapper {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(90deg, #fde8ec 0%, #ffffff 45%, #ffffff 55%, #fff6e8 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== SUB SECTION ===== */
+.subSection {
+    width: 86%;
+    max-width: 1200px;
+    padding: 22px 0 80px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.headerRow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 8px;
+}
+
+.heading {
+    font-size: 18px;
+    color: var(--Primary_Color, #1F4D9D);
+    font-weight: 600;
+    margin: 0;
+}
+
+.headingUnderline {
+    width: 72px;
+    height: 4px;
+    background: var(--Primary_Color, #1F4D9D);
+    border-radius: 2px;
+    display: inline-block;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+}
+
+.subtitle {
+    color: #111;
+    max-width: 1000px;
+    margin: 8px 0 18px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* search row */
+.searchRow {
+    margin: 12px 0 22px;
+    display: flex;
+    align-items: center;
+}
+
+/* grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+/* card */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    transition: transform .16s ease, box-shadow .16s ease;
+}
+
+.card:hover {
+    /* transform: translateY(-6px); */
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.10);
+}
+
+.cardImage {
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.cardTitle {
+    font-size: 14px;
+    color: #1a1a1a;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* responsive: 2 columns on smaller screens */
+@media (max-width: 900px) {
+    .subSection {
+        width: 94%;
+        padding: 18px 0 60px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .card {
+        height: 140px;
+        padding: 10px;
+    }
+
+    .cardImage {
+        width: 72px;
+        height: 72px;
+    }
+
+    .searchRow {
+        justify-content: flex-start;
+    }
+}
+
+/* tiny */
+@media (max-width: 420px) {
+    .subSection {
+        padding: 14px 8px 60px;
+        width: 96%;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .card {
+        height: 120px;
+        padding: 8px;
+    }
+
+    .cardImage {
+        width: 64px;
+        height: 64px;
+    }
+}/* === FIXED GRID === */
+.grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(197px, 1fr));
+    gap: 4px;
+    justify-content: start;
+    /* ✅ keeps all cards starting from left */
+    align-items: start;
+    padding-left: 0;
+    /* no unintended horizontal centering */
+    box-sizing: border-box;
+}
+
+/* === UNIFORM CARDS === */
+.card {
+    width: 197px;
+    /* ✅ fixed uniform size */
+    height: 183px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(11, 21, 40, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    /* transform: translateY(-6px); */
+    box-shadow: 0 16px 30px rgba(11, 21, 40, 0.09);
+}
+
+/* === IMAGE === */
+.cardImage {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    object-position: center;
+    margin-bottom: 10px;
+}
+
+/* === TITLE === */
+.cardTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
+    text-align: center;
+}
+
+/* === RESPONSIVE: 2 per row in mobile === */
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        justify-content: center;
+        /* optional for mobile centering */
+    }
+
+    .card {
+        width: 160px;
+        height: 170px;
+    }
+
+    .cardImage {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cardTitle {
+        font-size: 13px;
+    }
+}

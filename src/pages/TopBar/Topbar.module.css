@@ -1,0 +1,577 @@
+/* Topbar.module.css
+   Desktop-only styles. Mobile rules removed.
+   Uses your index.css variables (--Primary_Color, --White_Color, etc.).
+*/
+
+/* header (desktop) */
+.topbar {
+    background: linear-gradient(90deg, var(--Primary_Color) 0%, #2547c7 100%);
+    padding: 12px 16px;
+    box-shadow: 0 10px 24px rgba(32, 45, 90, 0.18);
+    color: var(--White_Color);
+    position: relative;
+    z-index: 40;
+    font-family: var(--Font_Family);
+}
+
+/* container layout */
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* left logo */
+.left {
+    flex: 0 0 72px;
+}
+
+.logoAndHam {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logoWrap {
+    width: 56px;
+    height: 56px;
+    background: var(--White_Color);
+    border-radius: 50%;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 18px rgba(25, 45, 90, 0.18);
+}
+
+.logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* center rows */
+.center {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+/* top row nav */
+.topRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
+}
+
+.topNavList {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.topNavItem {
+    position: relative;
+    font-size: var(--Font_Size_3);
+}
+
+.topLink {
+    color: var(--White_Color);
+    text-decoration: none;
+    padding: 6px;
+}
+
+.navBtn {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* badges group: badges + search + language component */
+.badgesGroup {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-left: 12px;
+}
+
+.badge {
+    height: 50px;
+    object-fit: contain;
+    padding: 2px 6px;
+}
+
+/* wrapper for LanguageSelector */
+.langWrapper {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* circular search button for desktop */
+.searchBtn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.09);
+    background: rgba(217, 217, 217, 0.5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 180ms ease, transform 160ms cubic-bezier(.2, .9, .2, 1);
+    flex: 0 0 44px;
+    margin-right: 8px;
+    box-shadow: 0 4px 10px rgba(2, 8, 34, 0.10);
+}
+
+.searchBtn:hover {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+/* bottom row nav */
+.bottomRow {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.bottomNavList {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.bottomNavItem {
+    position: relative;
+    font-size: var(--Font_Size_3);
+}
+
+.bottomLink {
+    color: var(--White_Color);
+    padding: 6px;
+    text-decoration: none;
+}
+
+/* Carets */
+.caret {
+    margin-left: 6px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid rgba(255, 255, 255, 0.95);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.caretSmall {
+    margin-left: 6px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid rgba(255, 255, 255, 0.95);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* shared dropdown */
+.dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    min-width: 180px;
+    background: var(--White_Color);
+    color: var(--Black_Color);
+    border-radius: 8px;
+    box-shadow: 0 10px 26px rgba(10, 30, 80, 0.18);
+    padding: 8px 0;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 160ms ease, transform 160ms ease, visibility 160ms;
+    z-index: 60;
+}
+
+.dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdownItem {
+    display: block;
+    padding: 8px 14px;
+    font-size: var(--Font_Size_2);
+    color: var(--Black_Color);
+    text-decoration: none;
+}
+
+.dropdownItem:hover {
+    background: linear-gradient(90deg, rgba(31, 77, 157, 0.05), rgba(37, 71, 199, 0.03));
+    color: var(--Primary_Color);
+}
+
+/* SEARCH MODAL (desktop) */
+.searchOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(4, 10, 30, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 120;
+    backdrop-filter: blur(4px);
+}
+
+.searchModal {
+    width: min(880px, 92%);
+    max-width: 920px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 250, 255, 0.98));
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 18px 50px rgba(3, 12, 40, 0.4);
+    position: relative;
+}
+
+.modalClose {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    color: var(--Black_Color, #111);
+    cursor: pointer;
+}
+
+.modalContent {
+    padding-top: 6px;
+}
+
+.modalTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--Black_Color);
+    margin-bottom: 12px;
+}
+
+.modalSearchRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border-radius: 999px;
+    padding: 8px 12px;
+    border: 1px solid rgba(10, 30, 80, 0.06);
+    width: 100%;
+}
+
+.modalIcon {
+    color: rgba(10, 30, 80, 0.6);
+    flex: 0 0 20px;
+}
+
+.modalInput {
+    border: none;
+    outline: none;
+    font-size: 15px;
+    padding: 6px 8px;
+    width: 100%;
+    font-family: var(--Font_Family);
+}
+
+.searchClear {
+    border: none;
+    background: transparent;
+    color: rgba(10, 30, 60, 0.8);
+    font-size: 18px;
+    line-height: 1;
+    padding: 0 6px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+/* RIGHT */
+.right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* hide any mobile-specific classes (no mobile behavior here) */
+.hamburger,
+.mobileHamburger,
+.hamBarSmall,
+.openBar1,
+.openBar2,
+.openBar3,
+.mobileMenuWrap,
+.mobileHeader,
+.mobileListWrap,
+.mobileMenuList,
+.mobileAccBtn,
+.mobileAccBody,
+.mobileAccItem,
+.mobileLangBtn,
+.mobileBottomLinks {
+    display: none;
+}
+
+/* ensure fonts on nav items use project font */
+.navBtn,
+.topLink,
+.bottomLink {
+    font-family: var(--Font_Family);
+}
+
+/* ---------- MOBILE (menu slides in from LEFT) ---------- */
+@media (max-width: 900px) {
+
+    .center,
+    .topRow,
+    .bottomRow,
+    .badgesGroup,
+    .searchBtn,
+    .langWrapper,
+    .right {
+        display: none !important;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 10px 14px;
+        gap: 8px;
+    }
+
+    .logoAndHam {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+    }
+
+    .left {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }/* HAMBURGER BUTTON (clean and centered lines) */
+    .hamburger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        padding: 0;
+        position: relative;
+    }
+    
+    .hamBar {
+        position: absolute;
+        width: 22px;
+        height: 2.5px;
+        border-radius: 2px;
+        background: var(--White_Color);
+        left: 50%;
+        transform: translateX(-50%);
+        transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+    
+    /* top, middle, bottom bars positioned correctly */
+    .hamBar:nth-child(1) {
+        top: 13px;
+    }
+    
+    .hamBar:nth-child(2) {
+        top: 21px;
+    }
+    
+    .hamBar:nth-child(3) {
+        top: 29px;
+    }
+    
+    /* transform to X (cross) when open */
+    .hamburger.open .hamBar:nth-child(1) {
+        transform: translateX(-50%) rotate(45deg);
+        top: 21px;
+    }
+    
+    .hamburger.open .hamBar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.open .hamBar:nth-child(3) {
+        transform: translateX(-50%) rotate(-45deg);
+        top: 21px;
+    }
+        /* color for the cross (when hamburger is open) */
+        .hamburger.open .hamBar {
+            background: var(--Black_Color);
+            /* default white */
+        }
+    
+        /* if you prefer your primary brand color instead */
+        .hamburger.open.altColor .hamBar {
+            background: var(--Primary_Color);
+            /* uses theme blue/purple */
+        }
+    /* MENU BACKDROP + PANEL (now sliding in from the LEFT) */
+    .mobileMenuWrap {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        /* <- changed: panel comes from left */
+        pointer-events: auto;
+    }
+
+    .mobileMenuBackdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(2, 8, 34, 0.48);
+        backdrop-filter: blur(3px);
+    }
+
+    .mobileMenuPanel {
+        position: relative;
+        width: min(360px, 92%);
+        height: 100%;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), #ffffff);
+        box-shadow: 18px 0 40px rgba(3, 12, 40, 0.3);
+        /* shadow to right (since panel on left) */
+        padding: 18px;
+        overflow-y: auto;
+        transform: translateX(-10%);
+        /* start slightly offscreen to the left */
+        transition: transform 260ms cubic-bezier(.2, .9, .2, 1);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .mobileMenuPanel.open {
+        transform: translateX(0);
+        /* slide into place */
+    }
+
+    .mobileHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .mobileListWrap {
+        display: block;
+    }
+
+    .mobileMenuList {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .mobileMenuList a,
+    .mobileMenuList button {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        width: 100%;
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--Black_Color);
+        background: transparent;
+        font-size: 15px;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .mobileMenuList a:hover,
+    .mobileMenuList button:hover {
+        background: linear-gradient(90deg, rgba(31, 77, 157, 0.04), rgba(37, 71, 199, 0.02));
+        color: var(--Primary_Color);
+    }
+
+    .mobileAccBtn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        background: transparent;
+        border: none;
+        padding: 12px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .mobileAccBody {
+        padding-left: 12px;
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .mobileAccBody.open {
+        display: flex;
+    }
+
+    .mobileAccItem {
+        padding: 8px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--Black_Color);
+        font-size: 14px;
+    }
+
+    .mobileBadgesRow {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .mobileBottomLinks {
+        margin-top: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+}

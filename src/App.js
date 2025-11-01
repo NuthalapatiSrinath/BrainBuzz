@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import "./App.css";
+
+import AppRoutes from "./routes/AppRoutes";
+import RenderModal from "./modals/RenderModal/RenderModal";
+// import { initAutoLogout } from "./utils/autoLogout";
+// import { isLoggedIn } from "../src/utils/auth";
 
 function App() {
+  const isModalOpen = useSelector((state) => state.modal.isOpen);
+
+  // useEffect(() => {
+    
+  //   if (isLoggedIn()) {
+  //     initAutoLogout();
+  //   }
+  // }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppRoutes />
+      {isModalOpen && <RenderModal />}
     </div>
   );
 }

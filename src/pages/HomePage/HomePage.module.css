@@ -1,0 +1,142 @@
+/* HomePage.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* ==== MAIN PAGE WRAPPER WITH GRADIENT ==== */
+.pageWrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+    /* ✨ Smooth left-right gradient for full page */
+    background: linear-gradient(90deg,
+            #fde8ec 0%,
+            /* soft pink on the left */
+            #ffffff 45%,
+            /* white center */
+            #ffffff 55%,
+            /* clean middle */
+            #fff6e8 100%
+            /* warm light cream on the right */
+        );
+}
+
+/* ==== HERO SECTION CONTAINER ==== */
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+    box-sizing: border-box;
+    background: transparent;
+    /* allows gradient to show */
+}
+
+/* ==== STACK FOR HERO IMAGES ==== */
+.stack {
+    position: relative;
+    width: 92%;
+    max-width: 1400px;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* ==== CARD ELEMENTS (IMAGE FRAMES) ==== */
+.card {
+    position: absolute;
+    overflow: hidden;
+    will-change: transform, opacity;
+    transition: transform 0.9s ease;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    pointer-events: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.front {
+    width: 82%;
+    z-index: 3;
+    transform-origin: center;
+    transform: translateY(0);
+    filter: none;
+}
+
+.back {
+    width: 96%;
+    z-index: 2;
+    transform-origin: center;
+    transform: translateY(-18px);
+    filter: none;
+}
+
+/* ==== IMAGE STYLING ==== */
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    transform: translateZ(0);
+}
+
+/* ==== CURRENT AFFAIRS SECTION WRAPPER ==== */
+.currentAffairs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 80px;
+    background: transparent;
+    /* gradient shows below */
+}
+
+/* ==== RESPONSIVE DESIGN ==== */
+@media (max-width: 1100px) {
+    .container {
+        padding: 0;
+    }
+
+    .stack {
+        height: 300px;
+    }
+
+    .front {
+        width: 86%;
+    }
+
+    .back {
+        width: 98%;
+        transform: translateY(-16px);
+    }
+}
+
+@media (max-width: 760px) {
+    .stack {
+        height: 240px;
+    }
+
+    .front {
+        width: 95%;
+        transform: translateY(0);
+        z-index: 3;
+        border-radius: 0;
+    }
+
+    .back {
+        width: 100%;
+        transform: translateY(-10px);
+        z-index: 2;
+        border-radius: 0;
+    }
+
+    .card {
+        box-shadow: none;
+    }
+}
