@@ -6,6 +6,7 @@ import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import HomePage from "../pages/HomePage/HomePage";
 import CurrentAffairsPage from "../pages/CurrentAffairsPage/CurrentAffairsPage";
 import UPSCPage from "../sections/CurrentAffairsSubCategorySection/UPSCPage/UPSCPage";
+import DailyQuizzesPage from "../pages/DailyQuizzesPage/DailyQuizzesPage";
 
 function AppRoutes() {
   return (
@@ -13,9 +14,10 @@ function AppRoutes() {
       <Route path="/" element={<DashboardLayout />}>
         {/* index route renders HomePage inside DashboardLayout */}
         <Route index element={<HomePage />} />
-        
+
         <Route path="/currentaffairs" element={<CurrentAffairsPage />} />
-        <Route path="/currentaffairs/upsc" element={<UPSCPage />} />
+        {/* <Route path="/currentaffairs/upsc" element={<UPSCPage />} /> */}
+        <Route path="/dailyquizzes" element={<DailyQuizzesPage />} />
       </Route>
 
       <Route path="*" element={<div>404 Not Found</div>} />

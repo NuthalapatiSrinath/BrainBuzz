@@ -616,3 +616,76 @@
         height: 100%;
     }
 }
+/* Add below to enable hover-dropdown + hover styles for Current Affairs & Daily Quizzes (desktop only) */
+@media (min-width: 901px) {
+
+    /* show dropdown when hovering the bottom nav item (affects the two BOTTOM_NAV items that have dropdowns) */
+    .bottomNavItem:hover .dropdown {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
+        /* match .dropdown.open final transform */
+    }
+
+    /* subtle background + rounded pill on the parent link when hovered */
+    .bottomNavItem:hover>.bottomLink,
+    .bottomNavItem:hover .bottomLink {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--White_Color);
+        border-radius: 8px;
+        /* padding: 6px 10px; */
+        /* keeps spacing while adding background */
+        transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+        transform: translateY(-1px);
+    }
+
+    /* make sure anchors that navigate to the parent pages also show pointer cursor */
+    .bottomNavList a[href="/currentaffairs"],
+    .bottomNavList a[href="/dailyquizzes"] {
+        cursor: pointer;
+    }
+
+    /* rotate caret subtly on hover (if present) */
+    .bottomNavItem:hover .caret,
+    .bottomNavItem:hover .caretSmall {
+        transform: translateY(-2px) rotate(180deg);
+        transition: transform 160ms ease;
+    }
+}
+/* mobile: single bottom nav row with toggle */
+.mobileBottomItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 4px;
+}
+
+.mobileAccToggle {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--Black_Color);
+    border-radius: 8px;
+}
+
+.mobileAccToggle:hover {
+    background: linear-gradient(90deg, rgba(31, 77, 157, 0.04), rgba(37, 71, 199, 0.02));
+    color: var(--Primary_Color);
+}
+
+/* ensure the parent anchor looks like other mobile items */
+.mobileBottomItem .mobileAccItem {
+    padding: 12px 8px;
+    text-decoration: none;
+    color: var(--Black_Color);
+    font-size: 16px;
+    border-radius: 8px;
+}

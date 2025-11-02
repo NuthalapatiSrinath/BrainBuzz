@@ -22,19 +22,34 @@ const BOTTOM_NAV = [
     key: "current",
     label: "Current Affairs",
     dropdown: [
-      { label: "National", href: "/currentaffairs" },
-      { label: "International", href: "/currentaffairs" },
-      { label: "State", href: "currentaffairs" },
-      
+      { label: "UPSC", href: "/currentaffairs/upsc" },
+      { label: "CGL", href: "/currentaffairs/cgl" },
+      { label: "CHSL", href: "currentaffairs/chsl" },
+
+      { label: "APPSC", href: "/currentaffairs/appsc" },
+      { label: "TSPSC", href: "currentaffairs/tspsc" },
+      { label: "AP Police SI", href: "/currentaffairs/appolice" },
+      { label: "TS Police SI", href: "/currentaffairs/tspolice" },
+      { label: "State Bank of India", href: "currentaffairs/sbi" },
+      { label: "IBPS", href: "/currentaffairs/ibps" },
+      { label: "Railways", href: "currentaffairs/railways" },
     ],
   },
   {
     key: "quizzes",
     label: "Daily Quizzes",
     dropdown: [
-      { label: "Today", href: "#" },
-      { label: "This Week", href: "#" },
-      { label: "Mock Tests", href: "#" },
+      { label: "UPSC", href: "/dailyquizzes/upsc" },
+      { label: "CGL", href: "/dailyquizzes/cgl" },
+      { label: "CHSL", href: "dailyquizzes/chsl" },
+
+      { label: "APPSC", href: "/dailyquizzes/appsc" },
+      { label: "TSPSC", href: "/dailyquizzes/tspsc" },
+      { label: "AP Police SI", href: "/dailyquizzes/appolice" },
+      { label: "TS Police SI", href: "/dailyquizzes/tspolice" },
+      { label: "State Bank of India", href: "dailyquizzes/sbi" },
+      { label: "IBPS", href: "/dailyquizzes/ibps" },
+      { label: "Railways", href: "dailyquizzes/railways" },
     ],
   },
   { key: "ebooks", label: "E-Books", href: "#" },
@@ -197,7 +212,27 @@ export default function Topbar() {
                     <li key={it.key} className={styles.bottomNavItem}>
                       {it.dropdown ? (
                         <Dropdown
-                          label={it.label}
+                          // for Current Affairs & Daily Quizzes: provide a clickable label that navigates to the parent page,
+                          // while Dropdown still provides the hover/click menu items
+                          label={
+                            it.key === "current" ? (
+                              <a
+                                href="/currentaffairs"
+                                className={styles.bottomLink}
+                              >
+                                {it.label}
+                              </a>
+                            ) : it.key === "quizzes" ? (
+                              <a
+                                href="/dailyquizzes"
+                                className={styles.bottomLink}
+                              >
+                                {it.label}
+                              </a>
+                            ) : (
+                              it.label
+                            )
+                          }
                           items={it.dropdown}
                           align="center"
                         />
@@ -324,19 +359,43 @@ export default function Topbar() {
             <hr />
 
             {/* Bottom nav */}
+            {/* Bottom nav (mobile) - single parent row + toggle to reveal submenu */}
             <div>
               <ul className={styles.mobileMenuList}>
                 {BOTTOM_NAV.map((it) =>
                   it.dropdown ? (
                     <li key={it.key}>
-                      <button
-                        className={styles.mobileAccBtn}
-                        onClick={() => toggleAccordion(it.key)}
-                        aria-expanded={!!openAccordions[it.key]}
-                      >
-                        <span>{it.label}</span>
-                        <span>{openAccordions[it.key] ? "−" : "+"}</span>
-                      </button>
+                      <div className={styles.mobileBottomItem}>
+                        {/* parent link (single visible label) */}
+                        <a
+                          href={
+                            it.key === "current"
+                              ? "/currentaffairs"
+                              : it.key === "quizzes"
+                              ? "/dailyquizzes"
+                              : it.href
+                          }
+                          className={styles.mobileAccItem}
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {it.label}
+                        </a>
+
+                        {/* expand/collapse control (separate, so label isn't duplicated) */}
+                        <button
+                          className={styles.mobileAccToggle}
+                          onClick={() => toggleAccordion(it.key)}
+                          aria-expanded={!!openAccordions[it.key]}
+                          aria-label={
+                            openAccordions[it.key]
+                              ? `Collapse ${it.label}`
+                              : `Expand ${it.label}`
+                          }
+                        >
+                          {openAccordions[it.key] ? "−" : "+"}
+                        </button>
+                      </div>
+
                       <div
                         className={`${styles.mobileAccBody} ${
                           openAccordions[it.key] ? styles.open : ""
