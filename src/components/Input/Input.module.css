@@ -1,0 +1,39 @@
+.inputWrapper {
+    width: 100%;
+}
+
+.inputField {
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    background-color: var(--White_Color);
+    font-size: var(--Font_Size_3);
+    color: var(--Black_Color);
+    box-shadow: 0 2px 8px rgba(10, 30, 80, 0.08);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    resize: none;
+}
+
+/* Hover & focus states */
+.inputField:hover,
+.inputField:focus {
+    box-shadow: 0 0 0 3px rgba(31, 77, 157, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Placeholder styling */
+.inputField::placeholder {
+    color: var(--Grey_Color);
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Optional responsive tweak */
+@media (max-width: 600px) {
+    .inputField {
+        font-size: var(--Font_Size_2);
+        padding: 12px 14px;
+    }
+}

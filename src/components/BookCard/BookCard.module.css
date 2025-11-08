@@ -1,0 +1,263 @@
+/* BookCard.module.css - tuned for desktop and neat mobile behavior */
+
+/* Base tokens (you may already have some vars; these are safe fallbacks) */
+:root {
+    --card-radius: 14px;
+    --card-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    --accent: #1f4ea6;
+    --muted: #6b7280;
+    --pill-bg: #97a9da;
+}
+
+/* Card container */
+.card {
+    background: #fff;
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    padding: 1.2rem;
+    transition: box-shadow 0.2s ease, transform 0.12s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    box-sizing: border-box;
+}
+
+.card:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    /* transform: translateY(-4px); */
+}
+
+/* Image box */
+.imageWrapper {
+    width: 140px;
+    height: 180px;
+    margin: 0 auto;
+    /* center the image horizontally */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Title and type block */
+.textBlock {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.25;
+    margin: 0;
+    text-align: left;
+}
+
+/* pill for type */
+.typeBadge {
+    background-color: var(--pill-bg);
+    color: #fff;
+    border-radius: 24px;
+    padding: 6px 14px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    align-self: flex-start;
+}
+
+/* info row: validity and medium */
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 600;
+    margin-top: 0.25rem;
+    gap: 10px;
+    align-items: center;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+    /* prefer to keep items on single line */
+}
+
+.infoItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    /* allow flex children to shrink */
+}
+
+/* icons */
+.icon {
+    color: var(--pill-bg);
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+}
+
+/* Actions row (View + Download) */
+.actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0.6rem;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+/* Shared button base — .halfBtn is applied to the Button via className prop */
+.halfBtn {
+    flex: 1 1 50%;
+    min-width: 0;
+    /* critical to allow button to shrink inside flex */
+    height: 48px !important;
+    font-size: 1rem !important;
+    border-radius: 12px !important;
+    cursor: pointer;
+    transition: transform 120ms ease, background 120ms ease;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px !important;
+}
+
+/* Outline (View) — first child */
+.halfBtn:first-child {
+    background: #fff !important;
+    color: var(--accent) !important;
+    border: 2px solid rgba(31, 78, 166, 0.45) !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+
+/* Hover for outline */
+.halfBtn:first-child:hover {
+    background: rgba(31, 78, 166, 0.04) !important;
+    /* transform: translateY(-2px); */
+}
+
+/* Solid (Download) — last child */
+.halfBtn:last-child {
+    background: var(--accent) !important;
+    color: #fff !important;
+    border: 2px solid var(--accent) !important;
+    font-weight: 500 !important;
+    box-shadow: 0 8px 18px rgba(31, 78, 166, 0.12) !important;
+}
+
+/* Hover for solid */
+.halfBtn:last-child:hover {
+    background: #163d88 !important;
+    /* transform: translateY(-2px); */
+}
+
+/* Ensure button text doesn't wrap and is centered */
+.halfBtn span,
+.halfBtn>* {
+    white-space: nowrap;
+}
+
+/* =================
+   Responsive tweaks
+   ================= */
+
+/* Tablet / small-desktop: reduce image & padding slightly */
+@media (max-width: 1024px) {
+    .imageWrapper {
+        width: 130px;
+        height: 160px;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .halfBtn {
+        height: 46px !important;
+        font-size: 0.98rem !important;
+    }
+}
+
+/* Mobile layout (neat, two cards per row handled by parent) */
+@media (max-width: 640px) {
+    .card {
+        padding: 12px;
+        gap: 0.45rem;
+        border-radius: 12px;
+    }
+
+    .imageWrapper {
+        width: 120px;
+        height: 150px;
+    }
+
+    .title {
+        font-size: 0.95rem;
+    }
+
+    /* Hide icons on very small screens (user asked to hide icons on mobile) */
+    .icon {
+        display: none;
+    }
+
+    /* Keep validity and medium single line: shrink font slightly and reduce gap */
+    .infoRow {
+        gap: 6px;
+        font-size: 0.9rem;
+        justify-content: flex-start;
+    }
+
+    .infoItem {
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Buttons — keep them on one row with equal width 50% if there's space */
+    .actions {
+        gap: 8px;
+    }
+
+    .halfBtn {
+        flex: 1 1 48%;
+        height: 44px !important;
+        font-size: 0.95rem !important;
+    }
+
+    /* On very narrow phones, stack buttons (to avoid cutting) */
+    @media (max-width: 360px) {
+        .actions {
+            flex-direction: column;
+        }
+
+        .halfBtn {
+            width: 100%;
+            flex: 1 1 100%;
+        }
+    }
+}
+
+/* Accessibility / print safe baseline */
+@media print {
+    .card {
+        box-shadow: none;
+        border: 1px solid #eee;
+    }
+}

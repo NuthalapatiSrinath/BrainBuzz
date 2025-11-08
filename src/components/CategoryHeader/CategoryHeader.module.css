@@ -27,6 +27,17 @@
 .left {
     display: flex;
     align-items: center;
+}/* active (selected) button */
+/* keep the existing combined/attribute selectors for robustness */
+.langBtn.active,
+.langBtn[aria-selected="true"],
+/* add a standalone .active class so styles.active is available with CSS Modules */
+.active {
+    background: #97A9DA;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
 }
 
 .title {

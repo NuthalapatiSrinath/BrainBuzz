@@ -1,0 +1,228 @@
+/* DropdownAllwhere.module.css - updated so dropdown fills parent width */
+
+.dropdownContainer {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    /* allow the parent flex cell to control width */
+    /* removed max-width to allow full-half occupancy */
+}
+/* DropdownAllwhere.module.css - updated clean version (no blue outline) */
+
+.dropdownContainer {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Main select element */
+.dropdown {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    background: #edf2ff;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 12px 40px 12px 14px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    color: #333;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Hover state (light shade change only) */
+.dropdown:hover {
+    background: #e6edff;
+}
+
+/* Remove browser's default focus highlight completely */
+.dropdown:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Dropdown arrow icon */
+.arrowDown {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #555;
+    pointer-events: none;
+}
+
+/* Disabled state */
+.dropdown:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .dropdown {
+        font-size: 14px;
+        padding: 10px 36px 10px 12px;
+    }
+}/* Neat native select + options (works well in modern browsers) */
+
+.dropdownContainer {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* select control appearance */
+.dropdown {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 56px;
+    padding: 14px 44px 14px 18px;
+    /* space for arrow */
+    border-radius: 12px;
+    background: #eef6ff;
+    /* light bluish */
+    border: 1px solid rgba(15, 59, 122, 0.08);
+    color: #0f1724;
+    font-size: 18px;
+    /* larger text like screenshot */
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: box-shadow 150ms ease, transform 120ms ease;
+    outline: none;
+}
+
+/* hide default IE/Edge expand arrow */
+.dropdown::-ms-expand {
+    display: none;
+}
+
+/* custom arrow (keeps the same character arrow or you can use an svg) */
+.arrowDown {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: rgba(12, 12, 13, 0.65);
+    pointer-events: none;
+}
+
+/* hover effect on the select */
+.dropdown:hover {
+    /* transform: translateY(-1px); */
+    background: #f3f8ff;
+}
+
+/* focus: avoid ugly outline, keep subtle ring for keyboard users */
+.dropdown:focus {
+    outline: none;
+    box-shadow: 0 8px 20px rgba(15, 59, 122, 0.06);
+    border-color: rgba(15, 59, 122, 0.12);
+}
+
+/* Remove the large dotted focus ring for mouse users but keep keyboard-visible ring */
+.dropdown:focus:not(:focus-visible) {
+    box-shadow: none;
+    border-color: rgba(15, 59, 122, 0.08);
+}
+
+/* Options styling — many browsers respect these (Chrome, Firefox, Edge).
+   Note: Mobile native pickers may ignore some option styling. */
+.dropdown option {
+    background: #ffffff;
+    /* make list white */
+    color: #0f1724;
+    padding: 12px 16px;
+    font-size: 17px;
+}
+
+/* hovered option (visual in some browsers) */
+.dropdown option:hover {
+    background: #eef6ff;
+    color: #0f1724;
+}
+
+/* selected option background when the popup is open (supported in modern browsers) */
+
+/* If the platform/browser shows a focus rectangle around the select element on click,
+   the rules above remove it; if you still see a circle from the browser, you may need
+   to remove outline with !important (but be careful re: accessibility). */
+.dropdown:focus {
+    outline: none !important;
+}
+
+/* small-screen tune */
+@media (max-width: 760px) {
+    .dropdown {
+        height: 50px;
+        font-size: 16px;
+        padding: 12px 42px 12px 14px;
+    }
+
+    .dropdown option {
+        font-size: 16px;
+        padding: 12px 14px;
+    }
+}
+/* Main select element */
+.dropdown {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    background: #edf2ff;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 12px 40px 12px 14px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    color: #333;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Hover + focus states */
+.dropdown:hover {
+    background: #e6edff;
+}
+
+.dropdown:focus {
+    box-shadow: 0 0 0 2px rgba(31, 77, 157, 0.3);
+}
+
+/* Dropdown arrow icon */
+.arrowDown {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #555;
+    pointer-events: none;
+}
+
+/* Disabled state */
+.dropdown:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Responsive tweaks (optional) */
+@media (max-width: 768px) {
+    .dropdown {
+        font-size: 14px;
+        padding: 10px 36px 10px 12px;
+    }
+}

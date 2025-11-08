@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.pageWrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+
+    /* page side gradient (left pink, right cream, center white) */
+    background: linear-gradient(90deg, #fff6e8 0%, #ffffff 50%, #fff6e8 100%);
+}
+
+/* ===== HERO ===== */
+.hero {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 56px 0 28px;
+    background: transparent;
+}
+
+/* Reduced box width and reduced height (desktop) */
+.heroContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 86%;
+    height: 250px;
+    background: linear-gradient(90deg, #ecf1ff 0%, #a7b6e1 100%);
+    border-radius: 8px;
+    overflow: visible;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    position: relative;
+    padding: 18px 28px;
+}
+
+/* Left title area (keeps the white card inside the box) */
+.heroTextBox {
+    flex: 0 0 46%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 2;
+}
+.searchBar{
+    padding-bottom: 1rem;
+}
+.heroTitle {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--Primary_Color, #1F4D9D);
+    background: #ffffff;
+    padding: 16px 30px;
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Right image area — image will overlap above the top edge of the heroContent */
+.heroImageBox {
+    flex: 0 0 44%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    overflow: visible;
+    z-index: 3;
+}
+
+/* IMAGE: pops out ABOVE the hero box using negative top (desktop) */
+.heroImage {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    position: relative;
+    top: -48px;
+    z-index: 4;
+    transition: transform 0.25s ease;
+}
+
+/* ===== CATEGORIES ===== */
+.categories {
+    width: 100%;
+    max-width: 1400px;
+    padding: 28px 40px 80px;
+    box-sizing: border-box;
+}
+
+.headerRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.heading {
+    font-size: 22px;
+    color: var(--Primary_Color, #1F4D9D);
+    font-weight: 600;
+    margin: 0;
+}
+
+.headingUnderline {
+    display: inline-block;
+    height: 4px;
+    width: 80px;
+    background: var(--Primary_Color, #1F4D9D);
+    border-radius: 2px;
+}
+
+.subtitle {
+    color: #111;
+    max-width: 900px;
+    margin: 8px 0 28px 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ===== GRID =====
+   Use auto-fit so tiles fill the row neatly. Each tile has a fixed height
+   to maintain equal sizes. Desktop will fit many columns; narrow screens go 2 columns.
+*/
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 22px;
+    justify-items: center;
+    align-items: start;
+}
+
+/* tile — fixed height ensures uniform size */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    width: 100%;
+    height: 160px;
+    /* fixed height for even tiles */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-sizing: border-box;
+}
+
+/* hover */
+.card:hover {
+    /* transform: translateY(-6px); */
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* image box: center and constrain the icon inside a squared container */
+.cardImage {
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+/* label */
+.cardTitle {
+    font-size: 14px;
+    color: #1a1a1a;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.1;
+}
+
+/* ===== RESPONSIVE: keep left(text) + right(image) on mobile as requested ===== */
+@media (max-width: 900px) {
+    .heroContent {
+        flex-direction: row;
+        /* keep left/right */
+        width: 94%;
+        max-width: 760px;
+        height: 220px;
+        padding: 14px;
+        gap: 14px;
+        align-items: stretch;
+    }
+
+    .heroTextBox {
+        flex: 0 0 50%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        order: 0;
+        padding-left: 8px;
+    }
+
+    .heroTitle {
+        font-size: 20px;
+        padding: 12px 20px;
+    }
+
+    .heroImageBox {
+        flex: 0 0 50%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        overflow: visible;
+        order: 1;
+    }
+
+    .heroImage {
+        width: 92%;
+        top: -36px;
+    }
+
+    .categories {
+        padding: 20px;
+    }
+
+    /* make grid 2 columns on tablet/smaller */
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+        height: 150px;
+        padding: 12px;
+    }
+
+    .cardImage {
+        width: 72px;
+        height: 72px;
+    }
+}
+
+/* Small phones: keep left/right but narrow — reduce overlap and image size */
+@media (max-width: 480px) {
+    .heroContent {
+        flex-direction: row;
+        width: 96%;
+        max-width: 420px;
+        height: 170px;
+        padding: 10px;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .heroTextBox {
+        flex: 0 0 52%;
+        justify-content: flex-start;
+        padding-left: 6px;
+    }
+
+    .heroTitle {
+        font-size: 18px;
+        padding: 10px 14px;
+    }
+
+    .heroImageBox {
+        flex: 0 0 48%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .heroImage {
+        width: 68%;
+        top: -18px;
+    }
+
+    .categories {
+        padding: 16px;
+    }
+
+    /* 2 columns on phones */
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+
+    .card {
+        height: 140px;
+        padding: 10px;
+    }
+
+    .cardImage {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 8px;
+    }
+
+    .cardTitle {
+        font-size: 13px;
+    }
+}
+/* Desktop-only: when a search is active, keep cards fixed-width and center them */
+@media (min-width: 901px) {
+    .searchActive {
+        /* ensure grid stays centered */
+        justify-content: center;
+    }
+
+    /* limit each column so a single/2 cards don't stretch full width */
+    .searchActive {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 200px)) !important;
+        /* max-width: 1200px; */
+        margin: 0 auto;
+    }
+}

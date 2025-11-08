@@ -1,0 +1,107 @@
+/* Layout: 3 equal cards */
+.row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 12px;
+}
+
+/* Single card */
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1rem 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    display: flex;
+    min-width: 200px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* Icon wrapper — remove background, keep centered */
+.iconWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    background: none;
+    /* no background */
+    box-shadow: none;
+    /* remove drop shadow */
+}
+
+/* Icon itself — make it big and clean */
+.icon {
+    width: 84px;
+    height: 84px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Value text */
+.value {
+    margin-bottom: 8px;
+}
+
+.big {
+    display: block;
+    font-size: 22px;
+    color: #18439e;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+/* Subtitle text */
+.subtitle {
+    color: #111;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* Responsive layout for mobile */
+/* Keep same visual style (icon on top, centered) but stack cards vertically and reduce sizes a bit */
+@media (max-width: 880px) {
+    .row {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 6px 8px;
+    }
+
+    .card {
+        min-height: auto;
+        padding: 16px;
+        flex-direction: column;
+        /* keep icon on top */
+        gap: 12px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .icon {
+        width: 72px;
+        height: 72px;
+    }
+
+    .big {
+        font-size: 20px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+
+    .value {
+        margin-bottom: 6px;
+    }
+}

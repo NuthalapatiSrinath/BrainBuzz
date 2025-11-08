@@ -655,37 +655,89 @@
 }
 /* mobile: single bottom nav row with toggle */
 .mobileBottomItem {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 8px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 4px;
 }
 
 .mobileAccToggle {
-    background: transparent;
-    border: none;
-    font-size: 20px;
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--Black_Color);
-    border-radius: 8px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--Black_Color);
+  border-radius: 8px;
 }
 
 .mobileAccToggle:hover {
-    background: linear-gradient(90deg, rgba(31, 77, 157, 0.04), rgba(37, 71, 199, 0.02));
-    color: var(--Primary_Color);
+  background: linear-gradient(90deg, rgba(31, 77, 157, 0.04), rgba(37, 71, 199, 0.02));
+  color: var(--Primary_Color);
 }
 
 /* ensure the parent anchor looks like other mobile items */
 .mobileBottomItem .mobileAccItem {
-    padding: 12px 8px;
+  padding: 12px 8px;
+  text-decoration: none;
+  color: var(--Black_Color);
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+/* --- Make Current Affairs & Daily Quizzes identical to Follow Us --- */
+.panelTriggerWrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+}
+
+.panelTriggerWrap .bottomLink {
+    color: var(--White_Color);
     text-decoration: none;
-    color: var(--Black_Color);
-    font-size: 16px;
-    border-radius: 8px;
+    font-weight: 500;
+    font-size: var(--Font_Size_3);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* caret button same style as Follow Us caret */
+.panelToggleBtn {
+    background: transparent;
+    border: none;
+    color: var(--White_Color);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* caret triangle same as Follow Us */
+.panelToggleBtn::after {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 6px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid rgba(255, 255, 255, 0.95);
+}
+
+/* hover color match Follow Us (slightly lighter white) */
+.panelTriggerWrap:hover .bottomLink,
+.panelTriggerWrap:hover .panelToggleBtn::after {
+    color: var(--White_Color);
+    border-top-color: rgba(255, 255, 255, 1);
 }

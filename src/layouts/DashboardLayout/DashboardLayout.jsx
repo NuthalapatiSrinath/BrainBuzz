@@ -1,19 +1,17 @@
+// src/layouts/DashboardLayout/DashboardLayout.jsx
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./DashboardLayout.module.css";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import TopBar from "../../pages/TopBar/TopBar";
+
+// <-- import ScrollToTop -->
+import ScrollToTop from "./../../scrollToTop.jsx";
 
 function DashboardLayout() {
   const [isScrolled, setIsScrolled] = useState(false);
   const topbarRef = useRef(null);
   const measurerRef = useRef({ raf: 0, mo: null, ro: null });
 
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 12);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
@@ -92,6 +90,9 @@ function DashboardLayout() {
 
   return (
     <div className={styles.DashboardLayout}>
+      {/* ensure ScrollToTop is mounted inside the layout so it runs on every route change */}
+      <ScrollToTop />
+
       <div className={styles.LeftSection} />
       <div className={styles.RightSection}>
         <div
@@ -103,7 +104,8 @@ function DashboardLayout() {
           <TopBar />
         </div>
 
-        <main className={styles.Main}>
+        <main className={styles.Main} id="main">
+          <ScrollToTop />
           <Outlet />
         </main>
       </div>

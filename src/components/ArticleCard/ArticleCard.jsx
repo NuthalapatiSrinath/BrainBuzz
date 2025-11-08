@@ -12,18 +12,12 @@ export default function ArticleCard({
   return (
     <article className={styles.card}>
       <div className={styles.media}>
-        {image ? (
-          <img src={image} alt="" className={styles.thumb} />
-        ) : (
-          <div className={styles.thumbPlaceholder} />
-        )}
+        {image ? <img src={image} alt="" className={styles.thumb} /> : <div className={styles.thumbPlaceholder} />}
       </div>
 
       <div className={styles.content}>
         <h3 className={styles.title}>
-          <button className={styles.titleBtn} onClick={onClick}>
-            {title}
-          </button>
+          <button className={styles.titleBtn} onClick={onClick}>{title}</button>
         </h3>
         <p className={styles.excerpt}>{excerpt}</p>
         <div className={styles.row}>

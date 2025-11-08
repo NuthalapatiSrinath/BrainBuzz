@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --quiz-header-height: 76px;
+    /* --page-width-percent: 86%; */
+    /* --page-max-width: 980px; */
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(90deg, #fff6e8 0%, #ffffff 50%, #fff6e8 100%);
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    padding-top: 0;
+}
+
+/* header container (normal flow) */
+.headerContainer {
+    width: 100%;
+    background: transparent;
+}
+
+/* Constrain header inner content to match .content */
+.headerContainer>* {
+    /* width: var(--page-width-percent); */
+    /* max-width: var(--page-max-width); */
+    /* margin: 0 auto; */
+    box-sizing: border-box;
+}
+
+/* ------------------------- Main content area below the header ------------------------- */
+.content {
+   position: relative;
+   padding: 2rem;
+    box-sizing: border-box;
+}
+
+.sectionTitle {
+    margin: 8px 0 18px 0;
+    font-size: 16px;
+    color: #1a57a6;
+    font-weight: 600;
+}
+
+.quizForm {
+    padding: 0 3rem;
+    background: transparent;
+}
+
+.questionBlock {
+    margin-bottom: 28px;
+    padding: 6px 2px;
+}
+
+.qtext {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #111;
+    font-weight: 600;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.12s ease, transform 0.06s ease;
+}
+
+.option input[type="radio"] {
+    margin-top: 4px;
+}
+
+.option:hover,
+.option:focus-within {
+    background: rgba(31, 77, 157, 0.03);
+    transform: translateY(-1px);
+}
+
+.optText {
+    font-size: 14px;
+    color: #222;
+    line-height: 1.5;
+}
+
+.openPrompt {
+    padding: 10px;
+    background: #fbfbfb;
+    border-radius: 6px;
+    color: #666;
+    font-size: 13px;
+}
+
+.submitRow {
+    margin-top: 8px;
+    padding: 28px 0 40px;
+}
+
+.submitBtn {
+    background: #1f4d9d;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* small chips to pass to header rightNodes (if used) */
+.smallChips {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.infoChip {
+    background: transparent;
+    color: #6b7993;
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+
+.empty {
+    padding: 48px;
+    color: #666;
+    text-align: center;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+    .content {
+        width: 94%;
+        margin: 12px auto 64px;
+    }
+
+    .qtext {
+        font-size: 13px;
+    }
+
+    .optText {
+        font-size: 13px;
+    }
+
+    .submitBtn {
+        width: 140px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        width: 96%;
+        margin: 10px auto 80px;
+    }
+
+    .submitRow {
+        padding-bottom: 28px;
+    }
+
+    .submitBtn {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+    }
+}

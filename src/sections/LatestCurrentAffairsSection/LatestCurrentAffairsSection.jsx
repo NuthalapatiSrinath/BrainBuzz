@@ -1,121 +1,142 @@
+// src/components/LatestCurrentAffairsSection/LatestCurrentAffairsSection.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CurrentAffairsCard from "../../components/CurrentAffairsCard/CurrentAffairsCard";
 import styles from "./LatestCurrentAffairsSection.module.css";
 
+/**
+ * Home section that shows many category cards.
+ * Each card's items point to /currentaffairs/:category/:subId
+ */
 export default function LatestCurrentAffairsSection() {
   const navigate = useNavigate();
-
-  // 🦁 The logo file should be in: public/images/lion.png
-  // (not src/images) — so you can access it directly by /images/lion.png
   const lionLogo = "/images/lion.png";
 
   const categories = [
     {
       id: "upsc",
       title: "UPSC Current Affairs",
-      shortName: "UPSC",
-      color: "var(--Utility_Color3)", // pink from your index.css
-      logo: lionLogo,
-      items: [
-        {
-          id: "1",
-          title: "Ladakh Protests over Statehood Demand",
-          href: "/upsc/ladakh",
-        },
-        { id: "2", title: "Mission Sudarshan Chakra", href: "/upsc/sudarshan" },
-        {
-          id: "3",
-          title: "2025 India–Pakistan Conflict / Operation Sindoor",
-          href: "/upsc/sindoor",
-        },
-        {
-          id: "4",
-          title: "2025 Vice Presidential Election in India",
-          href: "/upsc/vp",
-        },
-      ],
+      color: "#f2b6c3",
+      subId: "ias",
     },
+    // {
+    //   id: "cgl",
+    //   title: "SSC CGL Current Affairs",
+    //   color: "#bfe6ee",
+    //   subId: "general",
+    // },
     {
       id: "ssc",
       title: "SSC Current Affairs",
-      shortName: "SSC",
-      color: "var(--Utility_Color1)", // light blue
-      logo: lionLogo,
-      items: [
-        {
-          id: "1",
-          title: "Ladakh Protests over Statehood Demand",
-          href: "/ssc/ladakh",
-        },
-        { id: "2", title: "Mission Sudarshan Chakra", href: "/ssc/sudarshan" },
-        {
-          id: "3",
-          title: "2025 India–Pakistan Conflict / Operation Sindoor",
-          href: "/ssc/sindoor",
-        },
-        {
-          id: "4",
-          title: "2025 Vice Presidential Election in India",
-          href: "/ssc/vp",
-        },
-      ],
+      color: "#9fd8c7",
+      subId: "general",
     },
     {
       id: "appsc",
       title: "APPSC Current Affairs",
-      shortName: "APPSC",
-      color: "var(--Utility_Color2)", // green
-      logo: lionLogo,
-      items: [
-        {
-          id: "1",
-          title: "Ladakh Protests over Statehood Demand",
-          href: "/appsc/ladakh",
-        },
-        {
-          id: "2",
-          title: "Mission Sudarshan Chakra",
-          href: "/appsc/sudarshan",
-        },
-        {
-          id: "3",
-          title: "2025 India–Pakistan Conflict / Operation Sindoor",
-          href: "/appsc/sindoor",
-        },
-        {
-          id: "4",
-          title: "2025 Vice Presidential Election in India",
-          href: "/appsc/vp",
-        },
-      ],
+      color: "#c9f0e1",
+      subId: "appsc-1",
     },
+    // {
+    //   id: "banking",
+    //   title: "Banking Current Affairs",
+    //   color: "#efe6ff",
+    //   subId: "banking-news",
+    // },
+    // {
+    //   id: "state",
+    //   title: "State Current Affairs",
+    //   color: "#fff0e0",
+    //   subId: "state-general",
+    // },
+    // {
+    //   id: "international",
+    //   title: "International Current Affairs",
+    //   color: "#e8f8ff",
+    //   subId: "world",
+    // },
+    // {
+    //   id: "books",
+    //   title: "Books & Authors",
+    //   color: "#fff6e6",
+    //   subId: "books-authors",
+    // },
+    // {
+    //   id: "sports",
+    //   title: "Sports Current Affairs",
+    //   color: "#f9f0ff",
+    //   subId: "sports-main",
+    // },
+    // {
+    //   id: "awards",
+    //   title: "Awards Current Affairs",
+    //   color: "#f0fff4",
+    //   subId: "awards-list",
+    // },
+    // {
+    //   id: "economy",
+    //   title: "Economy Current Affairs",
+    //   color: "#f4f7ff",
+    //   subId: "economy-main",
+    // },
+    // {
+    //   id: "science",
+    //   title: "Science & Tech",
+    //   color: "#eef9ff",
+    //   subId: "science-tech",
+    // },
   ];
 
   return (
     <section className={styles.section}>
       <div className={styles.headerRow}>
         <h2 className={styles.heading}>Latest Current Affairs</h2>
-        <span className={styles.headingUnderline}></span>
+        <span className={styles.headingUnderline} />
       </div>
 
       <p className={styles.subtitle}>
-        Check the categories and choose the category that best fits your exam
-        preparation path.
+        Select a category to view the latest items for that exam or topic.
       </p>
 
       <div className={styles.grid}>
-        {categories.map((cat) => (
-          <CurrentAffairsCard
-            key={cat.id}
-            title={cat.title}
-            shortName={cat.shortName}
-            color={cat.color}
-            logo={cat.logo} // 🦁 comes from /public/images/lion.png
-            items={cat.items}
-            onNavigate={(href) => navigate(href)}
-          />
-        ))}
+        {categories.map((cat) => {
+          const href = `/currentaffairs/${cat.id}/${cat.subId}`;
+          // show 4 dummy list items per card (you can customize later)
+          const items = [
+            {
+              id: `${cat.id}-1`,
+              title: "Ladakh Protests over Statehood Demand",
+              href,
+            },
+            { id: `${cat.id}-2`, title: "Mission Sudarshan Chakra", href },
+            {
+              id: `${cat.id}-3`,
+              title: "2025 India–Pakistan Conflict / Operation Sindoor",
+              href,
+            },
+            {
+              id: `${cat.id}-4`,
+              title: "2025 Vice Presidential Election in India",
+              href,
+            },
+          ];
+
+          return (
+            <div key={cat.id} className={styles.gridItem}>
+              <CurrentAffairsCard
+                title={cat.title}
+                color={cat.color}
+                logo={lionLogo}
+                items={items.map((it) => ({
+                  id: it.id,
+                  title: it.title,
+                  onClick: () => navigate(it.href),
+                  href: it.href,
+                }))}
+              />
+            </div>
+          );
+        })}
       </div>
     </section>
   );

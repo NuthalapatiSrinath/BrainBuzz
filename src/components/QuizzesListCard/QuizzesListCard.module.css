@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --card-min-width: 320px;
+    --card-bg: #ffffff;
+    --card-default-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Card container - allow width controlled by parent grid/column */
+.cardWrap {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    background: var(--card-bg);
+    box-shadow: var(--card-default-shadow);
+    overflow: hidden;
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    transition: transform 0.24s ease, box-shadow 0.24s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardWrap:hover {
+    /* transform: translateY(-4px); */
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* watermark logo */
+.logoBg {
+    position: absolute;
+    inset: 0;
+    background-image: var(--logo-url);
+    background-repeat: no-repeat;
+    background-position: center 62%;
+    background-size: 160px auto;
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+}
+
+/* header stays above logo */
+.header {
+    position: relative;
+    z-index: 2;
+    background: var(--header-color, #f7c8d3);
+    padding: 18px 20px;
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.65);
+    letter-spacing: 0.2px;
+}
+
+/* list area (content above logo) */
+.list {
+    position: relative;
+    z-index: 2;
+    list-style: none;
+    margin: 0;
+    padding: 16px 14px;
+    flex: 1 1 auto;
+}
+
+.listItem {
+    margin: 8px 0;
+}
+
+.itemBtn {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 12px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.14s ease, transform 0.08s ease;
+    outline: none;
+}
+
+.itemBtn:hover,
+.itemBtn:focus {
+    background: rgba(31, 77, 157, 0.04);
+}
+
+.chev {
+    flex: 0 0 18px;
+    font-weight: 600;
+    color: #333;
+    font-size: 18px;
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.itemText {
+    color: #111;
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 500;
+}
+
+.empty {
+    color: #888;
+    padding: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .header {
+        padding: 14px;
+    }
+
+    .title {
+        font-size: 17px;
+    }
+
+    .itemBtn {
+        padding: 10px 12px;
+    }
+
+    .chev {
+        font-size: 16px;
+    }
+}

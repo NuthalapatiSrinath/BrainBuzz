@@ -1,0 +1,381 @@
+/* PublicationsPage.module.css */
+
+/* === Theme tokens === */
+:root {
+    --bg: #fff;
+    --muted: #6b7280;
+    --accent: #1f4ea6;
+    /* primary blue (download) */
+    --accent-soft: #e9f0ff;
+    --card-shadow: 0 6px 22px rgba(13, 30, 60, 0.06);
+    --card-radius: 14px;
+    --page-pad: 28px;
+    --max-width: 1360px;
+}
+
+/* === Page wrapper === */
+.pageWrapper {
+    background: linear-gradient(180deg, #fff 0%, #fff 100%);
+    min-height: 100vh;
+    padding: 0;
+    font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #0f172a;
+}
+
+/* === Top controls / search area === */
+.controls {
+    padding: 18px var(--page-pad);
+    background: transparent;
+}
+
+.controlsInner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.searchCol {
+    flex: 1 1 480px;
+    min-width: 0;
+}
+
+.actionsCol {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* result count */
+.resultCount {
+    font-weight: 600;
+    color: var(--muted);
+}
+
+/* === Grid section containing cards === */
+.gridSection {
+    padding: 18px var(--page-pad) 48px;
+    box-sizing: border-box;
+}
+
+/* the grid wrapper */
+.grid {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    gap: 22px;
+    grid-template-columns: repeat(4, 1fr);
+    /* default: 4 columns */
+    align-items: start;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* No results fallback */
+.noResults {
+    grid-column: 1 / -1;
+    background: #fff;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    color: var(--muted);
+    font-size: 16px;
+}
+
+/* === Card === */
+.card {
+    background: var(--bg);
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    min-height: 380px;
+    box-sizing: border-box;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(13, 30, 60, 0.12);
+}
+
+/* thumbnail area */
+.thumbWrap {
+    width: 100%;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #ffffff, #fbfbfd);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.03);
+    padding: 18px;
+    box-sizing: border-box;
+}
+
+.thumb {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* card body */
+.cardBody {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+}
+
+.topRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* small tag pill */
+.tag {
+    display: inline-block;
+    background: #eef6ff;
+    color: #2856a3;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+/* title */
+.title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 4px 0;
+    color: #0b3b78;
+    text-align: left;
+}
+
+/* author if present */
+.author {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* meta row */
+.metaRow {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    color: var(--muted);
+    font-size: 13px;
+    flex-wrap: wrap;
+}
+
+.metaItem {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: var(--muted);
+}
+
+.metaItem svg {
+    display: block;
+}
+
+/* actions container (View / Download) */
+.cardActions {
+    margin-top: auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+/* View button - outline style */
+.viewBtn {
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: 2px solid rgba(63, 108, 194, 0.4);
+    background: transparent;
+    color: var(--accent);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 18px;
+    letter-spacing: 0.2px;
+    flex: 1 1 50%;
+    text-align: center;
+    transition: transform 120ms ease, background 120ms ease;
+}
+
+/* make outline slightly rounded with inner padding like the screenshot */
+.viewBtn:hover {
+    background: rgba(31, 78, 166, 0.03);
+    transform: translateY(-2px);
+}
+
+/* Download anchor wrapper & button styling */
+.downloadLink {
+    display: inline-block;
+    margin-left: 0;
+    text-decoration: none;
+    flex: 1 1 50%;
+    box-sizing: border-box;
+}
+
+/* Apply button-like styling to inner button (Button component may render a button) */
+.downloadLink button,
+.downloadLink .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 12px 18px !important;
+    border-radius: 14px !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 8px 18px rgba(31, 78, 166, 0.12) !important;
+    background: var(--accent) !important;
+    color: #fff !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: center;
+    letter-spacing: 0.2px;
+    transition: transform 120ms ease;
+}
+
+.downloadLink button:hover,
+.downloadLink .btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ensure anchor has no underline and is full width */
+.downloadLink {
+    text-decoration: none;
+}
+
+/* fallback for anchor-only download (when no Button component inside) */
+.downloadLink[data-anchor] {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* small helper to keep spacing consistent */
+.card .downloadLink+.viewBtn {
+    margin-left: 0;
+}
+
+/* === Responsive rules (ensures 2-per-row on small screens) === */
+
+/* 1280+ : 4 columns (default already set) */
+
+/* 1025 - 1279 : 3 columns */
+@media (max-width: 1279px) and (min-width: 1025px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* <= 1024 : 2 columns */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+        padding-inline: 12px;
+        max-width: 100%;
+    }
+
+    .controlsInner {
+        max-width: 100%;
+        padding-inline: 8px;
+    }
+}
+
+/* small phones: keep 2 columns (not 1) — tighter gaps, smaller thumbs */
+@media (max-width: 640px) {
+    .gridSection {
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-bottom: 28px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin: 0 auto;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        min-height: auto;
+    }
+
+    .thumbWrap {
+        height: 150px;
+        padding: 12px;
+    }
+
+    .cardBody {
+        padding: 12px;
+    }
+
+    .controlsInner {
+        gap: 10px;
+        padding-inline: 4px;
+    }
+
+    .cardActions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .viewBtn,
+    .downloadLink button,
+    .downloadLink .btn {
+        min-width: 0;
+        flex: 1 1 50%;
+    }
+
+    /* if viewport is extremely narrow, stack them */
+    @media (max-width: 420px) {
+        .grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .cardActions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .viewBtn,
+        .downloadLink button,
+        .downloadLink .btn {
+            width: 100%;
+        }
+    }
+
+    .title {
+        font-size: 15px;
+    }
+}
+
+/* optional small utility classes you might use elsewhere */
+.hideOnMobile {
+    display: block;
+}
+
+@media (max-width: 640px) {
+    .hideOnMobile {
+        display: none;
+    }
+}

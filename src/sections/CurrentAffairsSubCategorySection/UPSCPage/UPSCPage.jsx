@@ -2,11 +2,12 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import UPSCHeader from "./UPSCHeader";
+import Header from "../../../components/Header/Header";
 import CategoryHeader from "../../../components/CategoryHeader/CategoryHeader";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 
 import styles from "./UPSCPage.module.css";
+
 
 export default function UPSCPage() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ export default function UPSCPage() {
   return (
     <div className={styles.pageWrapper}>
       {/* hero with centered logo */}
-      <UPSCHeader />
+      <Header imageSrc="/images/upsc.png" alt="UPSC Logo" />
 
       {/* thin white strip with title & language pills */}
       <CategoryHeader

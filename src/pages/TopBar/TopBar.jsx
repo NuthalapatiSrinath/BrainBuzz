@@ -1,6 +1,8 @@
+// src/components/Topbar/Topbar.jsx
 import React, { useEffect, useRef, useState } from "react";
 import LanguageSelector from "../../components/LanguageSelector/LanguageSelector";
 import Dropdown from "../../components/Dropdown/Dropdown";
+import TopbarPanel from "./TopbarPanel";
 import styles from "./Topbar.module.css";
 
 /* TOP_NAV & BOTTOM_NAV same as before */
@@ -22,50 +24,172 @@ const BOTTOM_NAV = [
     key: "current",
     label: "Current Affairs",
     dropdown: [
-      { label: "UPSC", href: "/currentaffairs/upsc" },
-      { label: "CGL", href: "/currentaffairs/cgl" },
-      { label: "CHSL", href: "currentaffairs/chsl" },
-
-      { label: "APPSC", href: "/currentaffairs/appsc" },
-      { label: "TSPSC", href: "currentaffairs/tspsc" },
-      { label: "AP Police SI", href: "/currentaffairs/appolice" },
-      { label: "TS Police SI", href: "/currentaffairs/tspolice" },
-      { label: "State Bank of India", href: "currentaffairs/sbi" },
-      { label: "IBPS", href: "/currentaffairs/ibps" },
-      { label: "Railways", href: "currentaffairs/railways" },
+      {
+        label: "UPSC",
+        href: "/currentaffairs/upsc",
+        icon: "/images/upsc.png",
+      },
+      {
+        label: "CGL",
+        href: "/currentaffairs/cgl",
+        icon: "/images/cgl.png",
+      },
+      {
+        label: "CHSL",
+        href: "/currentaffairs/chsl",
+        icon: "/images/chsl.png",
+      },
+      {
+        label: "APPSC",
+        href: "/currentaffairs/appsc",
+        icon: "/images/appsc.png",
+      },
+      {
+        label: "TSPSC",
+        href: "/currentaffairs/tspsc",
+        icon: "/images/tspsc.png",
+      },
+      {
+        label: "AP Police SI",
+        href: "/currentaffairs/appolice",
+        icon: "/images/appolice.png",
+      },
+      {
+        label: "TS Police SI",
+        href: "/currentaffairs/tspolice",
+        icon: "/images/tspolice.png",
+      },
+      {
+        label: "State Bank of India",
+        href: "/currentaffairs/sbi",
+        icon: "/images/sbi.png",
+      },
+      {
+        label: "IBPS",
+        href: "/currentaffairs/ibps",
+        icon: "/images/ibps.png",
+      },
+      {
+        label: "Railways",
+        href: "/currentaffairs/railways",
+        icon: "/images/railway.png",
+      },
     ],
   },
   {
     key: "quizzes",
     label: "Daily Quizzes",
     dropdown: [
-      { label: "UPSC", href: "/dailyquizzes/upsc" },
-      { label: "CGL", href: "/dailyquizzes/cgl" },
-      { label: "CHSL", href: "dailyquizzes/chsl" },
-
-      { label: "APPSC", href: "/dailyquizzes/appsc" },
-      { label: "TSPSC", href: "/dailyquizzes/tspsc" },
-      { label: "AP Police SI", href: "/dailyquizzes/appolice" },
-      { label: "TS Police SI", href: "/dailyquizzes/tspolice" },
-      { label: "State Bank of India", href: "dailyquizzes/sbi" },
-      { label: "IBPS", href: "/dailyquizzes/ibps" },
-      { label: "Railways", href: "dailyquizzes/railways" },
+      {
+        label: "UPSC",
+        href: "/dailyquizzes/upsc",
+        icon: "/images/upsc.png",
+      },
+      {
+        label: "CGL",
+        href: "/dailyquizzes/cgl",
+        icon: "/images/cgl.png",
+      },
+      {
+        label: "CHSL",
+        href: "/dailyquizzes/chsl",
+        icon: "/images/chsl.png",
+      },
+      {
+        label: "APPSC",
+        href: "/dailyquizzes/appsc",
+        icon: "/images/appsc.png",
+      },
+      {
+        label: "TSPSC",
+        href: "/dailyquizzes/tspsc",
+        icon: "/images/tspsc.png",
+      },
+      {
+        label: "AP Police SI",
+        href: "/dailyquizzes/appolice",
+        icon: "/images/appolice.png",
+      },
+      {
+        label: "TS Police SI",
+        href: "/dailyquizzes/tspolice",
+        icon: "/images/tspolice.png",
+      },
+      {
+        label: "State Bank of India",
+        href: "/dailyquizzes/sbi",
+        icon: "/images/sbi.png",
+      },
+      {
+        label: "IBPS",
+        href: "/dailyquizzes/ibps",
+        icon: "/images/ibps.png",
+      },
+      {
+        label: "Railways",
+        href: "/dailyquizzes/railways",
+        icon: "/images/railway.png",
+      },
     ],
   },
-  { key: "ebooks", label: "E-Books", href: "#" },
-  { key: "prev", label: "Previous Question Papers", href: "#" },
+
+  { key: "ebooks", label: "E-Books", href: "/ebooks" },
+  {
+    key: "prev",
+    label: "Previous Question Papers",
+    href: "/previous-papers", // <-- absolute (leading slash) to avoid relative-url bug
+  },
   { key: "courses", label: "Online Courses", href: "#" },
   { key: "test", label: "Test Series", href: "#" },
-  { key: "about", label: "About Us", href: "#" },
-  { key: "contact", label: "Contact Us", href: "#" },
+  { key: "about", label: "About Us", href: "/aboutus" },
+  { key: "contact", label: "Contact Us", href: "/contactus" },
 ];
 
+function langCodeToLabel(code) {
+  if (!code) return "English";
+  const c = String(code).toLowerCase();
+  if (c === "hi") return "Hindi";
+  if (c === "te") return "Telugu";
+  return "English";
+}
+
+/**
+ * Normalize href strings so they are absolute paths (start with "/")
+ * Leaves absolute URLs and hashes untouched.
+ */
+function normalizeHref(href) {
+  if (!href) return "#";
+  // keep external full urls and hashes untouched
+  if (
+    href.startsWith("http://") ||
+    href.startsWith("https://") ||
+    href.startsWith("#")
+  )
+    return href;
+  // ensure it starts with a single leading slash
+  return href.startsWith("/") ? href : `/${href}`;
+}
+
 export default function Topbar() {
-  const [language, setLanguage] = useState("English");
+  // initialize language from localStorage (bb_lang_code set by translate helper)
+  const initialLanguage = (() => {
+    try {
+      const code = localStorage.getItem("bb_lang_code");
+      return langCodeToLabel(code);
+    } catch (e) {
+      return "English";
+    }
+  })();
+
+  const [language, setLanguage] = useState(initialLanguage);
   const [searchValue, setSearchValue] = useState("");
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openAccordions, setOpenAccordions] = useState({}); // for mobile dropdowns
+
+  // NEW: which panel is open (null | 'current' | 'quizzes')
+  const [showPanelKey, setShowPanelKey] = useState(null);
+
   const rootRef = useRef(null);
 
   useEffect(() => {
@@ -73,12 +197,14 @@ export default function Topbar() {
       if (!rootRef.current) return;
       if (!rootRef.current.contains(e.target)) {
         setShowSearchModal(false);
+        setShowPanelKey(null); // close panel when clicking outside
       }
     }
     function onKey(e) {
       if (e.key === "Escape") {
         setShowSearchModal(false);
         setMobileOpen(false);
+        setShowPanelKey(null);
       }
     }
     document.addEventListener("mousedown", onDocClick);
@@ -89,14 +215,43 @@ export default function Topbar() {
     };
   }, []);
 
+  // Sync language state on mount (in case page reloaded by translate helper)
+  useEffect(() => {
+    try {
+      const code = localStorage.getItem("bb_lang_code");
+      const label = langCodeToLabel(code);
+      if (label !== language) setLanguage(label);
+    } catch (e) {
+      // ignore
+    }
+    // also listen for storage changes from other tabs
+    function onStorage(e) {
+      if (e.key === "bb_lang_code") {
+        const label = langCodeToLabel(e.newValue);
+        setLanguage(label);
+      }
+    }
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // run only once on mount
+
   function toggleMobile() {
     setMobileOpen((s) => !s);
-    // close any open search modal
+    // close any open search modal or panel
     setShowSearchModal(false);
+    setShowPanelKey(null);
   }
 
   function toggleAccordion(key) {
     setOpenAccordions((prev) => ({ ...prev, [key]: !prev[key] }));
+  }
+
+  // Helper to toggle panel open/close (if same key, close)
+  function togglePanel(key) {
+    setShowPanelKey((prev) => (prev === key ? null : key));
+    // ensure search modal closed
+    setShowSearchModal(false);
   }
 
   return (
@@ -138,11 +293,18 @@ export default function Topbar() {
                       {it.dropdown ? (
                         <Dropdown
                           label={it.label}
-                          items={it.dropdown}
+                          // pass items with normalized hrefs
+                          items={(it.dropdown || []).map((d) => ({
+                            ...d,
+                            href: normalizeHref(d.href),
+                          }))}
                           align="center"
                         />
                       ) : (
-                        <a href={it.href} className={styles.topLink}>
+                        <a
+                          href={normalizeHref(it.href)}
+                          className={styles.topLink}
+                        >
                           {it.label}
                         </a>
                       )}
@@ -211,33 +373,63 @@ export default function Topbar() {
                   {BOTTOM_NAV.map((it) => (
                     <li key={it.key} className={styles.bottomNavItem}>
                       {it.dropdown ? (
-                        <Dropdown
-                          // for Current Affairs & Daily Quizzes: provide a clickable label that navigates to the parent page,
-                          // while Dropdown still provides the hover/click menu items
-                          label={
-                            it.key === "current" ? (
-                              <a
-                                href="/currentaffairs"
-                                className={styles.bottomLink}
-                              >
-                                {it.label}
-                              </a>
-                            ) : it.key === "quizzes" ? (
-                              <a
-                                href="/dailyquizzes"
-                                className={styles.bottomLink}
-                              >
-                                {it.label}
-                              </a>
-                            ) : (
-                              it.label
-                            )
-                          }
-                          items={it.dropdown}
-                          align="center"
-                        />
+                        // For current/quizzes we render a custom label + caret toggle that opens TopbarPanel on desktop.
+                        it.key === "current" || it.key === "quizzes" ? (
+                          <div className={styles.panelTriggerWrap}>
+                            {/* parent link */}
+                            <a
+                              href={
+                                it.key === "current"
+                                  ? normalizeHref("/currentaffairs")
+                                  : normalizeHref("/dailyquizzes")
+                              }
+                              className={styles.bottomLink}
+                            >
+                              {it.label}
+                            </a>
+
+                            {/* caret/toggle (desktop) */}
+                            <button
+                              type="button"
+                              aria-haspopup="dialog"
+                              aria-expanded={showPanelKey === it.key}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                togglePanel(it.key);
+                              }}
+                              className={styles.panelToggleBtn}
+                              title={`Open ${it.label} panel`}
+                            >
+                              {/* caret icon could go here */}
+                            </button>
+
+                            {/* Panel (desktop-only styles are inside TopbarPanel.module.css) */}
+                            {showPanelKey === it.key && (
+                              <TopbarPanel
+                                type={it.key}
+                                items={(it.dropdown || []).map((d) => ({
+                                  ...d,
+                                  href: normalizeHref(d.href),
+                                }))}
+                                onClose={() => setShowPanelKey(null)}
+                              />
+                            )}
+                          </div>
+                        ) : (
+                          <Dropdown
+                            label={it.label}
+                            items={(it.dropdown || []).map((d) => ({
+                              ...d,
+                              href: normalizeHref(d.href),
+                            }))}
+                            align="center"
+                          />
+                        )
                       ) : (
-                        <a href={it.href} className={styles.bottomLink}>
+                        <a
+                          href={normalizeHref(it.href)}
+                          className={styles.bottomLink}
+                        >
                           {it.label}
                         </a>
                       )}
@@ -284,7 +476,6 @@ export default function Topbar() {
                 <div style={{ fontWeight: 700 }}>Menu</div>
               </div>
 
-              {/* replicate close (hamburger in open state shows X) but provide explicit accessible button */}
               <button
                 className={`${styles.hamburger} ${
                   mobileOpen ? styles.open : ""
@@ -336,7 +527,7 @@ export default function Topbar() {
                         {it.dropdown.map((d, idx) => (
                           <a
                             key={idx}
-                            href={d.href}
+                            href={normalizeHref(d.href)}
                             className={styles.mobileAccItem}
                             onClick={() => setMobileOpen(false)}
                           >
@@ -347,7 +538,10 @@ export default function Topbar() {
                     </li>
                   ) : (
                     <li key={it.key}>
-                      <a href={it.href} onClick={() => setMobileOpen(false)}>
+                      <a
+                        href={normalizeHref(it.href)}
+                        onClick={() => setMobileOpen(false)}
+                      >
                         {it.label}
                       </a>
                     </li>
@@ -359,7 +553,6 @@ export default function Topbar() {
             <hr />
 
             {/* Bottom nav */}
-            {/* Bottom nav (mobile) - single parent row + toggle to reveal submenu */}
             <div>
               <ul className={styles.mobileMenuList}>
                 {BOTTOM_NAV.map((it) =>
@@ -370,10 +563,10 @@ export default function Topbar() {
                         <a
                           href={
                             it.key === "current"
-                              ? "/currentaffairs"
+                              ? normalizeHref("/currentaffairs")
                               : it.key === "quizzes"
-                              ? "/dailyquizzes"
-                              : it.href
+                              ? normalizeHref("/dailyquizzes")
+                              : normalizeHref(it.href)
                           }
                           className={styles.mobileAccItem}
                           onClick={() => setMobileOpen(false)}
@@ -401,10 +594,10 @@ export default function Topbar() {
                           openAccordions[it.key] ? styles.open : ""
                         }`}
                       >
-                        {it.dropdown.map((d, idx) => (
+                        {(it.dropdown || []).map((d, idx) => (
                           <a
                             key={idx}
-                            href={d.href}
+                            href={normalizeHref(d.href)}
                             className={styles.mobileAccItem}
                             onClick={() => setMobileOpen(false)}
                           >
@@ -415,7 +608,10 @@ export default function Topbar() {
                     </li>
                   ) : (
                     <li key={it.key}>
-                      <a href={it.href} onClick={() => setMobileOpen(false)}>
+                      <a
+                        href={normalizeHref(it.href)}
+                        onClick={() => setMobileOpen(false)}
+                      >
                         {it.label}
                       </a>
                     </li>
@@ -447,10 +643,16 @@ export default function Topbar() {
 
             {/* bottom links */}
             <div className={styles.mobileBottomLinks}>
-              <a href="/about" onClick={() => setMobileOpen(false)}>
+              <a
+                href={normalizeHref("/aboutus")}
+                onClick={() => setMobileOpen(false)}
+              >
                 About Us
               </a>
-              <a href="/contact" onClick={() => setMobileOpen(false)}>
+              <a
+                href={normalizeHref("/contactus")}
+                onClick={() => setMobileOpen(false)}
+              >
                 Contact Us
               </a>
             </div>

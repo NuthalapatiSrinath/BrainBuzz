@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.pageWrapper {
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(90deg, #fff6e8 0%, #ffffff 50%, #fff6e8 100%);
+}
+
+.container {
+    width: 86%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    padding: 24px 0 64px;
+}
+
+/* Grid: allow cards to be min-width and then stretch to use available space */
+/* Grid: 2 columns on desktop, 1 column on small screens */
+.grid {
+    display: grid;
+    /* force exactly 2 columns on larger screens */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+/* responsive: single column under 900px (keep your existing mobile settings) */
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        width: 94%;
+        padding: 18px 0 48px;
+    }
+}
+
+/* empty state */
+.emptyState {
+    padding: 36px;
+    color: #666;
+    grid-column: 1 / -1;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+    text-align: center;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        width: 94%;
+        padding: 18px 0 48px;
+    }
+}

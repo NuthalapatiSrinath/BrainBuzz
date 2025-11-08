@@ -1,15 +1,22 @@
-import React from "react";
+// src/components/CategoryHeader/CategoryHeader.jsx
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./CategoryHeader.module.css";
+import {
+  translatePage,
+  getCurrentTranslatedLang,
+} from "../../utils/googleTranslate";
 
 /**
  * Props
- * - title: string (required) - left heading text
- * - languages: array of { key: string, label: string } (optional)
- * - active: string (optional) - key of active language
- * - onChange: function(newKey) (optional) - called when user selects a language
- * - showDivider: boolean (optional) - small top divider line (default true)
- * - className: string (optional) - extra className
+ * - title: string
+ * - languages: [{ key, label }]  (we will use label for display)
+ * - active: string label ("English","Hindi","Telugu")
+ * - onChange: fn(label)
+ * - showDivider, className
+ *
+ * NOTE: This component keeps a small internal selected state so the visual 'active'
+ * remains correct after translatePage() triggers a full reload (which is expected).
  */
 export default function CategoryHeader({
   title,
@@ -18,11 +25,89 @@ export default function CategoryHeader({
     { key: "hi", label: "Hindi" },
     { key: "te", label: "Telugu" },
   ],
-  active = "en",
+  active = "English",
   onChange = () => {},
   showDivider = true,
   className = "",
 }) {
+  // map label <-> code helpers
+  const labelToCode = (label) => {
+    if (!label) return "en";
+    const l = String(label).toLowerCase();
+    if (l === "hindi") return "hi";
+    if (l === "telugu") return "te";
+    return "en";
+  };
+  const codeToLabel = (code) => {
+    if (!code) return "English";
+    const c = String(code).toLowerCase();
+    if (c === "hi") return "Hindi";
+    if (c === "te") return "Telugu";
+    return "English";
+  };
+
+  // internal selected label so visual persists after page reload
+  const [selected, setSelected] = useState(active);
+
+  // Sync selected from prop 'active' when it changes
+  useEffect(() => {
+    if (active && active !== selected) setSelected(active);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
+  // On mount, read persisted bb_lang_code (if any) so after reload the correct button is highlighted
+  useEffect(() => {
+    try {
+      const code = getCurrentTranslatedLang(); // reads cookie then localStorage fallback
+      const label = codeToLabel(code);
+      if (label && label !== selected) setSelected(label);
+    } catch (e) {
+      // ignore
+    }
+
+    // also listen for storage events (other tabs or components may change language)
+    function onStorage(e) {
+      if (e.key === "bb_lang_code") {
+        const newLabel = codeToLabel(e.newValue);
+        setSelected(newLabel);
+      }
+      if (e.key === "bb_lang_label") {
+        // if someone set the label directly
+        setSelected(e.newValue);
+      }
+    }
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSelect = (label) => {
+    const code = labelToCode(label);
+
+    // keep original behaviour of storing label (optional)
+    try {
+      localStorage.setItem("bb_lang_label", label);
+    } catch (e) {
+      // ignore
+    }
+
+    // store canonical code used by other parts (Topbar, helpers)
+    try {
+      localStorage.setItem("bb_lang_code", code);
+    } catch (e) {
+      // ignore
+    }
+
+    // update local visual state immediately
+    setSelected(label);
+
+    // notify parent with the label (preserves existing API)
+    onChange(label);
+
+    // call helper with language code (translatePage expects codes like 'en','hi','te')
+    translatePage(code);
+  };
+
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {showDivider && <div className={styles.topDivider} aria-hidden="true" />}
@@ -38,7 +123,7 @@ export default function CategoryHeader({
             aria-label="Languages"
           >
             {languages.map((lang) => {
-              const isActive = lang.key === active;
+              const isActive = lang.label === selected;
               return (
                 <button
                   key={lang.key}
@@ -48,7 +133,7 @@ export default function CategoryHeader({
                   className={`${styles.langBtn} ${
                     isActive ? styles.active : ""
                   }`}
-                  onClick={() => onChange(lang.key)}
+                  onClick={() => handleSelect(lang.label)}
                 >
                   {lang.label}
                 </button>

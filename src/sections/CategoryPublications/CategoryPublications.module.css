@@ -1,0 +1,223 @@
+/* CategoryPublications.module.css
+   Cleaned-up styles for filter layout + cards grid
+   - Row1: two equal half-width dropdowns
+   - Row2: left half dropdown, right half contains Search button aligned to start
+   - Responsive: stacks on small screens
+*/
+
+/* Page wrapper */
+.pageWrap {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Layout */
+.contentContainer {
+    max-width: 1180px;
+    margin: 22px auto;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 28px;
+    align-items: start;
+}
+
+/* Filter card */
+.filterCard {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(18, 24, 31, 0.04);
+    margin-bottom: 20px;
+}
+
+/* Generic row for filter controls */
+.filtersRow {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+/* Make direct children act as two equal halves */
+.filtersRow>* {
+    flex: 1 1 0;
+    min-width: 0;
+    /* ensure children can shrink */
+}
+
+/* second row (subject + search) uses same layout, but we want the button
+   to be aligned to the start of the right half. We'll wrap the button
+   in a container (JSX already does that) so we style that container here. */
+.filtersRowBottom {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 0;
+    /* if you want less bottom spacing on final row */
+}
+
+/* Ensure left child (dropdown) stretches, right child is a container that aligns its content start */
+.filtersRowBottom>*:nth-child(1) {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.filtersRowBottom>*:nth-child(2) {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    /* vertical align top */
+    justify-content: flex-start;
+    /* horizontal align to left of the right half */
+}
+
+/* Style the actual Button inside the right half.
+   This targets a <button> or a .btn wrapper if your Button component uses that. */
+.filtersRowBottom button,
+.filtersRowBottom .btn {
+    width: 160px;
+    height: 44px;
+    padding: 0 18px;
+    border-radius: 8px;
+    background: var(--Primary_Color);
+    color: #fff;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style dropdown-like controls within the filter rows.
+   Adjust these selectors if your DropdownAllwhere uses different internals. */
+.filtersRow>* .dropdownContainer,
+.filtersRow>* select,
+.filtersRow>* input,
+.filtersRow>* .dropdown,
+.filtersRowBottom>* .dropdownContainer,
+.filtersRowBottom>* select,
+.filtersRowBottom>* input,
+.filtersRowBottom>* .dropdown {
+    width: 100%;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 10px;
+    background: #eef4ff;
+    /* light bluish */
+    border: 0;
+    font-size: 16px;
+    color: #111827;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Cards grid for papers */
+.cardsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+/* Paper card (keeps your look) */
+.card {
+    display: flex;
+    gap: 14px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 8px 24px rgba(10, 30, 80, 0.06);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(10, 30, 80, 0.09);
+}
+
+.thumbWrap {
+    width: 120px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f6f8ff;
+    flex-shrink: 0;
+}
+
+.thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cardBody {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cardTitle {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f3b7a;
+    margin-bottom: 4px;
+}
+
+.cardMeta {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Optional small override if you passed className={styles.cardOverride} */
+.cardOverride {
+    width: 100%;
+}
+
+/* No-Papers fallback */
+.noPapers {
+    padding: 28px;
+    text-align: center;
+    color: #6b7280;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 780px) {
+    .contentContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .cardsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .filtersRow,
+    .filtersRowBottom {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .filtersRow>*,
+    .filtersRowBottom>* {
+        width: 100%;
+        flex-basis: auto;
+    }
+
+    .filtersRowBottom>*:nth-child(2) {
+        justify-content: center;
+    }
+
+    .filtersRowBottom button,
+    .filtersRowBottom .btn {
+        width: 100%;
+    }
+}

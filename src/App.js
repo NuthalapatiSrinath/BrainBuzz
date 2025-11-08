@@ -4,21 +4,23 @@ import "./App.css";
 
 import AppRoutes from "./routes/AppRoutes";
 import RenderModal from "./modals/RenderModal/RenderModal";
+import ScrollToTop from "./scrollToTop";
+import { useLocation } from "react-router";
 // import { initAutoLogout } from "./utils/autoLogout";
 // import { isLoggedIn } from "../src/utils/auth";
 
 function App() {
   const isModalOpen = useSelector((state) => state.modal.isOpen);
 
-  // useEffect(() => {
-    
-  //   if (isLoggedIn()) {
-  //     initAutoLogout();
-  //   }
-  // }, []);
+  
+  const location = useLocation()
+  useEffect(()=> {
+    console.log(location)
+  })
 
   return (
     <div className="App">
+      <ScrollToTop />
       <AppRoutes />
       {isModalOpen && <RenderModal />}
     </div>

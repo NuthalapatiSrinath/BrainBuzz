@@ -1,0 +1,49 @@
+.btn {
+    font-family: var(--Font_Family);
+    font-size: var(--Font_Size_3);
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Primary filled button */
+.primary {
+    background-color: var(--Primary_Color);
+    color: var(--White_Color);
+    border: 2px solid var(--Primary_Color);
+}
+
+.primary:hover {
+    background-color: #1c4288;
+    transform: translateY(-1px);
+}
+
+/* Outline button */
+.outline {
+    background-color: transparent;
+    color: var(--Primary_Color);
+    border: 2px solid var(--Primary_Color);
+}
+
+.outline:hover {
+    background-color: rgba(31, 77, 157, 0.08);
+    transform: translateY(-1px);
+}
+
+/* Full-width button (used for Send Now) */
+.fullWidth {
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .btn {
+        font-size: var(--Font_Size_2);
+        padding: 10px 16px;
+    }
+}

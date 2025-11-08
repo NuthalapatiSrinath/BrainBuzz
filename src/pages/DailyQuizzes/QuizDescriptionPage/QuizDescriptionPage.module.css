@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.wrapper {
+    min-height: 83vh;
+    padding: 3rem ;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(90deg, #fff6e8 0%, #ffffff 50%, #fff6e8 100%);
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.inner {
+    /* width: 86%; */
+    /* max-width: 980px; */
+    background: transparent;
+    box-sizing: border-box;
+    padding: 0 12px;
+}
+
+/* top row: title left, date right */
+.topRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+}
+
+/* Title link (blue, small) */
+.titleLink {
+    color:var(--Primary_Color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+/* Date at the right */
+.date {
+    color: var(--Black_Color);
+    font-size: var(--Font_Size_6);
+}
+
+/* body content area */
+.body {
+    /* background: #fff; */
+    /* padding: 28px 28px 44px 28px; */
+    /* border-radius: 6px; */
+    /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); */
+}
+
+.excerpt {
+    color: var(--Black_Color);
+   line-height: 1.9;
+    font-size: 18px;
+    margin: 0 0 22px 0;
+}
+
+/* 'Why' heading */
+.whyHeading {
+    color: var(--Primary_Color);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 22px;
+}
+
+/* why paragraph */
+.whyText {
+color: var(--Black_Color);
+line-height: 1.8;
+    font-size: 18px;
+    margin: 0 0 22px 0;
+}
+
+/* actions: button area */
+.actions {
+    padding: 2rem 0;
+    /* margin-top: 6px; */
+    display: flex;
+    gap: 12px;
+}
+
+/* not found style */
+.notFound {
+    margin: 0 0 12px 0;
+    color: #333;
+}
+
+/* ---------- Enhanced Mobile Layout (title below date) ---------- */
+@media (max-width: 768px) {
+    .wrapper {
+        padding: 20px 14px;
+        min-height: 91vh;
+    }
+
+    .inner {
+        width: 100%;
+        /* max-width: 720px; */
+        padding: 0;
+    }
+
+    /* Top row: show date on top right, title below it */
+    .topRow {
+        flex-direction: column-reverse;
+        /* reverse order: date first, then title */
+        align-items: flex-start;
+        width: 100%;
+        gap: 4px;
+        margin-bottom: 16px;
+    }
+
+    .date {
+        align-self: flex-end;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.6);
+        margin-bottom: 4px;
+    }
+
+    .titleLink {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: var(--Primary_Color);
+        /* margin-bottom: 6px; */
+    }
+
+    .body {
+        /* padding: 14px;? */
+    }
+
+    .excerpt {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+
+    .whyHeading {
+        font-size: 18px;
+        margin-top: 6px;
+        margin-bottom: 8px;
+    }
+
+    .whyText {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+
+    .actions {
+        padding: 12px 0;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .actions .btn,
+    .actions button,
+    .actions .btn.primary,
+    .actions .btn.outline {
+        width: 100% !important;
+        display: block;
+        padding: 10px 12px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+}

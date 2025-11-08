@@ -1,0 +1,165 @@
+/* src/sections/PaperDetail/PaperDetail.module.css */
+
+/* Base page wrapper */
+.pageWrap {
+    padding-bottom: 48px;
+    box-sizing: border-box;
+}
+
+/* Layout */
+.contentContainer {
+    display: flex;
+    gap: 32px;
+    max-width: 1180px;
+    margin: 24px auto;
+    padding: 0 20px;
+    align-items: flex-start;
+}
+
+/* Columns */
+.leftColumn {
+    flex: 1 1 0;
+}
+
+.rightColumn {
+    width: 320px;
+    flex: 0 0 320px;
+}
+
+/* Title row above viewer */
+.topRow {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+/* Title and small meta */
+.title {
+    font-size: 28px;
+    margin: 0 0 8px;
+    color: #204a87;
+}
+
+.metaSmall {
+    color: #666;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+/* Viewer card: contains the viewerHeader and the iframe */
+.viewerCard {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 8px 18px rgba(24, 46, 83, 0.08);
+}
+
+/* NEW: header inside the viewer card with published date left and download button right */
+.viewerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+/* Published date text */
+.published {
+    display: flex;
+    font-size: 16px;
+    color: var(--Black_Color);
+    font-weight: 600;
+}
+
+/* viewer actions container (download button) */
+.viewerActions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+/* PDF iframe */
+.pdfIframe {
+    width: 100%;
+    height: 700px;
+    border: none;
+    display: block;
+    background: #f4f7ff;
+}
+
+/* No PDF fallback */
+.noPdf {
+    padding: 24px;
+    color: #444;
+}
+
+/* Small adjustments so Download button inside viewer header looks like previous */
+.viewerActions a,
+.viewerActions button {
+    text-decoration: none;
+}
+
+/* Responsive: collapse to single column on small devices */
+@media (max-width: 980px) {
+    .contentContainer {
+        flex-direction: column;
+        gap: 18px;
+        padding: 0 16px;
+    }
+
+    .rightColumn {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+    }
+}
+
+/* Smaller screens: adjust sizes and stack header contents */
+@media (max-width: 640px) {
+    .title {
+        font-size: 20px;
+    }
+
+    .viewerCard {
+        padding: 14px;
+    }
+
+    .viewerHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .viewerActions {
+        width: 100%;
+    }
+
+    .viewerActions button,
+    .viewerActions a .btn {
+        width: 100%;
+        display: block;
+    }
+
+    .pdfIframe {
+        height: 420px;
+    }
+}
+
+/* Very small devices (phones) - further reduce iframe height */
+@media (max-width: 380px) {
+    .pdfIframe {
+        height: 360px;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .published {
+        font-size: 15px;
+    }
+}

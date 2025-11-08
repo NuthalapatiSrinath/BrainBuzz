@@ -1,13 +1,12 @@
+// src/components/LanguageSelector/LanguageSelector.jsx
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./LanguageSelector.module.css";
+import { translatePage } from "../../utils/googleTranslate";
 
 /**
- * LanguageSelector
- * - language: currently selected language (string)
- * - onChange: function to call with new language
- * - options: optional array of labels
- * - compact: optional boolean — render slightly smaller (useful for mobile header)
+ * A single canonical LanguageSelector. Use this component everywhere
+ * (Topbar, CategoryHeader, etc.) so behavior is identical.
  */
 export default function LanguageSelector({
   language,
@@ -18,6 +17,12 @@ export default function LanguageSelector({
   const wrapperCls = [styles.wrapper, compact ? styles.compact : ""]
     .join(" ")
     .trim();
+
+  const handleClick = (opt) => {
+    onChange(opt);
+    const langCode = opt === "Hindi" ? "hi" : opt === "Telugu" ? "te" : "en";
+    translatePage(langCode);
+  };
 
   return (
     <div className={wrapperCls} role="tablist" aria-label="Language selector">
@@ -38,7 +43,7 @@ export default function LanguageSelector({
             type="button"
             role="tab"
             aria-selected={active}
-            onClick={() => onChange(opt)}
+            onClick={() => handleClick(opt)}
             className={cls}
           >
             <span className={styles.label}>{opt}</span>

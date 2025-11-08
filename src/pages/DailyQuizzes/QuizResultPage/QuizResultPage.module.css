@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.wrapper {
+    min-height: 84.5vh;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(90deg, #fff6e8 0%, #ffffff 50%, #fff6e8 100%);
+    padding-bottom: 80px;
+    color: #0b2240;
+}
+
+/* container constrains content and centers it horizontally */
+.container {
+    width: 86%;
+    max-width: 980px;
+    margin: 26px auto;
+    text-align: center;
+    /* main alignment is center */
+    box-sizing: border-box;
+}
+
+/* page title */
+.title {
+    margin: 8px 0 18px;
+    font-size: 20px;
+    color: #1c3d91;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* row that contains the three cards; centers them and adds spacing */
+.cardsRow,
+.resultsRow {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin: 20px 0 18px;
+    flex-wrap: wrap;
+}
+
+/* single card styles (kept compact & elevated) */
+.card {
+    width: 220px;
+    min-height: 152px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(6, 24, 57, 0.06);
+    padding: 22px 18px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* icon inside card */
+.cardIcon {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+/* big numeric value */
+.cardValue {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0b2240;
+}
+
+/* small description under value */
+.cardLabel {
+    color: #222;
+    font-size: 13px;
+}
+
+/* ----------------------------
+   Centered summary + buttons area
+   ---------------------------- */
+/* container that groups message + buttons vertically and centers them */
+.messageRow {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* center horizontally */
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+}
+
+/* the "You've reached..." line */
+.summaryText,
+.reached {
+    font-size: 18px;
+    color: #111;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* actions row: centered horizontally, with gap */
+/* important: center and wrap on small screens */
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    justify-content: center;
+    /* <-- centered */
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* button styles (if you still use Button component classes, these are fallback) */
+.primaryBtn,
+.btnPrimary,
+.primary {
+    background: #1f4d9d;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(31, 77, 157, 0.1);
+}
+
+.outlineBtn,
+.btnOutline,
+.outline {
+    background: transparent;
+    color: #1f4d9d;
+    border: 1px solid rgba(31, 77, 157, 0.18);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* If you're using Button component supplied earlier, this keeps it tidy */
+.primaryBtn:focus,
+.outlineBtn:focus,
+.btnPrimary:focus,
+.btnOutline:focus {
+    outline: none;
+    box-shadow: 0 6px 18px rgba(31, 77, 157, 0.12);
+}
+
+/* small utility for the optional 'View Answers' button */
+.viewAnswersBtn {
+    /* no-op here, provided for per-page override */
+}
+
+/* Empty / not found state */
+.empty {
+    padding: 48px;
+    color: #666;
+    text-align: center;
+}
+
+/* result block (if you show details later) */
+.resultBlock {
+    background: transparent;
+    margin: 18px 0;
+    text-align: left;
+}
+
+/* question text etc (if reused) */
+.qtext {
+    font-weight: 600;
+    color: #0b2240;
+}
+
+/* correct / wrong labels */
+.correct {
+    color: #0aa65b;
+    font-weight: 600;
+}
+
+.wrong {
+    color: #ef3b2d;
+    font-weight: 600;
+}
+
+/* responsive: stack the cards and make buttons full width on small screens */
+@media (max-width: 900px) {
+    .container {
+        width: 94%;
+    }
+
+    .cardsRow,
+    .resultsRow {
+        gap: 16px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 420px;
+    }
+
+    .actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .primaryBtn,
+    .outlineBtn,
+    .btnPrimary,
+    .btnOutline {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .cardIcon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .summaryText,
+    .reached {
+        font-size: 16px;
+    }
+}

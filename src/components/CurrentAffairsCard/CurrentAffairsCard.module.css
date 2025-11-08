@@ -2,27 +2,39 @@
 
 :root {
     --card-width: 340px;
+    /* default sidebar max */
+    --card-max-wide: 880px;
+    /* left widget max when expanded */
     --card-bg: #ffffff;
     --card-default-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
 }
 
-/* Card container */
+/* Card container — fluid up to a controlled max */
 .cardWrap {
     position: relative;
-    width: var(--card-width);
+    width: 100%;
+    max-width: var(--card-width);
+    /* by default it looks like the sidebar card */
     background: var(--card-bg);
-    /* border-radius: 6px; */
     box-shadow: var(--card-default-shadow);
     overflow: hidden;
     font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
     transition: transform 0.24s ease, box-shadow 0.24s ease;
+    /* border-radius: 6px; */
 }
 
+/* When this card is inside the page twoWidgetsRow .leftWidget we allow it to grow wider.
+   This rule is scoped to the page structure and won't affect other pages. */
+.twoWidgetsRow .leftWidget .cardWrap {
+    max-width: var(--card-max-wide);
+}
+
+/* smaller shadow on hover (optional) */
 .cardWrap:hover {
-    /* transform: translateY(-4px); */
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.09);
 }
 
-/* ✅ Faint Ashoka logo watermark */
+/* faint Ashoka logo watermark (keeps behind content) */
 .logoBg {
     position: absolute;
     inset: 0;
@@ -31,7 +43,6 @@
     background-position: center 60%;
     background-size: 140px auto;
     opacity: 0.06;
-    /* very low visibility */
     pointer-events: none;
     z-index: 0;
     mix-blend-mode: multiply;
@@ -41,17 +52,34 @@
 .header {
     position: relative;
     z-index: 2;
-    background: var(--header-color, var(--Utility_Color3, #f7c8d3));
+    background: var(--header-color, #f7c8d3);
     padding: 14px 20px;
-    text-align: center;
+    text-align: left;
+    /* border-bottom-left-radius: 6px; */
+    /* border-bottom-right-radius: 6px; */
 }
 
 .title {
     margin: 0;
-    font-size: var(--Font_Size_7);
+    font-size: 1.25rem;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.65);
     letter-spacing: 0.2px;
+}
+
+/* top articles block used when topArticles prop is present */
+.topArticles {
+    padding: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 2;
+}
+
+/* ensure items inside topArticles fill the width */
+.topArticleItem {
+    width: 100%;
 }
 
 /* list area (content also above logo) */
@@ -85,8 +113,6 @@
 .itemBtn:hover,
 .itemBtn:focus {
     background: rgba(31, 77, 157, 0.04);
-
-    /* transform: translateX(2px); */
 }
 
 .chev {
@@ -100,7 +126,7 @@
 
 .itemText {
     color: #111;
-    font-size: var(--Font_Size_5);
+    font-size: 0.95rem;
     line-height: 1.35;
     font-weight: 500;
 }
@@ -110,12 +136,11 @@
     padding: 12px 14px;
 }
 
-/* ✅ Responsive: Keep shadow in mobile too */
+/* Small screen behavior keeps cards full width */
 @media (max-width: 480px) {
     .cardWrap {
-        width: 100%;
+        max-width: 100%;
         box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-        /* lighter, mobile-friendly shadow */
     }
 
     .header {
@@ -133,4 +158,10 @@
     .chev {
         font-size: 16px;
     }
+}
+
+/* Additional scoping when placed in the page to make topArticles slightly roomier */
+.twoWidgetsRow .leftWidget .topArticles {
+    padding: 18px;
+    gap: 16px;
 }
