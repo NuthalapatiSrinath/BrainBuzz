@@ -1,74 +1,98 @@
 .page {
-    width: 100%;
-    padding: 40px 24px;
-    /* background: transparent; */
-            background: linear-gradient(90deg, #fff6e8 0%, #ffffff 10%, #fff6e8 400%);
-    box-sizing: border-box;
+  width: 100%;
+  padding: 40px 24px;
+  /* background: transparent; */
+  background: linear-gradient(90deg, #fff6e8 0%, #ffffff 10%, #fff6e8 400%);
+  box-sizing: border-box;
 }
 
 /* central container */
 .container {
-    max-width: 1180px;
-    margin: 0 auto;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.aboutText {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(23, 32, 46, 0.06);
+}
+
+.aboutText h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #18212b;
+  text-align: center;
+}
+
+.aboutText p {
+  color: #555;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 12px auto;
 }
 
 /* header */
 .header {
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 }
 
 .title {
-    color: var(--Primary_Color);
-    font-weight: 600;
-    font-size: var(--Font_Size_7);
-    /* margin-left: 6px; */
+  color: var(--Primary_Color);
+  font-weight: 600;
+  font-size: var(--Font_Size_7);
+  /* margin-left: 6px; */
 }
 
 /* Hero row - two images side by side on desktop */
 .heroRow {
-   
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin: 18px 0 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 18px 0 28px;
 }
 
 /* No background, no shadow around images */
 .heroItem {
-    height: 200px;
-    width: 100%;
-    overflow: hidden;
-    /* border-radius: 16px; */
-    background: none;
-    box-shadow: none;
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+  /* border-radius: 16px; */
+  background: none;
+  box-shadow: none;
 }
 
 /* Pure images only */
 .heroImg {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    border-radius: 16px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
 }
 
 /* Subtitle centered */
 .subtitle {
-    text-align: center;
-  font-size:22px;
+  text-align: center;
+  font-size: 22px;
   font-weight: 500;
-    margin: 28px 0;
-    
-    color:var(--Black_Color);
+  margin: 28px 0;
+
+  color: var(--Black_Color);
 }
 
 /* Default grid (desktop/tablet) */
 .cardsGrid {
-    display: grid;
-    gap: 22px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    align-items: start;
-    margin-bottom: 40px;
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: start;
+  margin-bottom: 40px;
 }
 
 /* Desktop-specific layout:
@@ -77,62 +101,62 @@
    - second row: center last two cards
 */
 @media (min-width: 1025px) {
-    .heroImg {
-        height: 260px;
-        /* ✅ both images same height */
-    }
+  .heroImg {
+    height: 260px;
+    /* ✅ both images same height */
+  }
 
-    .cardsGrid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 28px;
-    }
+  .cardsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
 
-    /* place card 5 and 6 in the middle columns so they appear centered on row 2 */
-    .cardsGrid>*:nth-child(5) {
-        grid-column: 2 / 3;
-    }
+  /* place card 5 and 6 in the middle columns so they appear centered on row 2 */
+  .cardsGrid > *:nth-child(5) {
+    grid-column: 2 / 3;
+  }
 
-    .cardsGrid>*:nth-child(6) {
-        grid-column: 3 / 4;
-    }
+  .cardsGrid > *:nth-child(6) {
+    grid-column: 3 / 4;
+  }
 }
 
 /* Medium screens tweak */
 @media (max-width: 1024px) {
-    .heroImg {
-        height: 180px;
-    }
+  .heroImg {
+    height: 180px;
+  }
 
-    .cardsGrid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
+  .cardsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
 }
 
 /* Mobile view — keep previous layout (2-column grid) */
 @media (max-width: 780px) {
-    .heroRow {
-        grid-template-columns: 1fr;
-    }
+  .heroRow {
+    grid-template-columns: 1fr;
+  }
 
-    .heroImg {
-        height: 200px;
-    }
+  .heroImg {
+    height: 200px;
+  }
 
-    .title {
-        font-size: 18px;
-    }
+  .title {
+    font-size: 18px;
+  }
 
-    .subtitle {
-        margin: 22px 10px;
-        font-size: 16px;
-    }
+  .subtitle {
+    margin: 22px 10px;
+    font-size: 16px;
+  }
 
-    .cardsGrid {
-        grid-template-columns: repeat(1, 1fr);
-        gap: 14px;
-    }
+  .cardsGrid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 14px;
+  }
 
-    .cardsGrid>* {
-        grid-column: auto;
-    }
+  .cardsGrid > * {
+    grid-column: auto;
+  }
 }

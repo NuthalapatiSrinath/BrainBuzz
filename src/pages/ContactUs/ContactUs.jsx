@@ -12,6 +12,7 @@ const EMAILJS_PUBLIC_KEY = "NEgO9KY7bvlPOXsIU";
 export default function ContactUs({
   lat = 17.444,
   lng = 78.388,
+  // socialLinks kept as before
   socialLinks = [
     {
       href: "https://instagram.com",
@@ -39,7 +40,12 @@ export default function ContactUs({
       alt: "Facebook",
     },
   ],
-}) {
+  // NEW (dynamic values you'll pass in):
+  // whatsappNumber should be a phone number string (can include + or spaces) e.g. "+919876543210"
+  whatsappNumber = "9346532339", // default empty — pass this prop dynamically
+  // phoneNumber used for tel: (Book an Appointment). Example: "+919876543210" or "180099699642"
+  phoneNumber = "9346532339",
+} = {}) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -115,6 +121,30 @@ export default function ContactUs({
 
   const mapSrc = `https://www.google.com/maps?q=Brain%20Buzz%20Academy,+Plot+No+45,+TGIIC+Rd,+Mythri+Nagar,+Kukatpally,+Hyderabad,+Telangana+500072&z=15&output=embed`;
 
+  // Helper to normalize WhatsApp number for wa.me (digits only, no + or spaces)
+  const normalizeWhatsapp = (num) => {
+    if (!num) return "";
+    // remove everything except digits and plus, then strip leading +
+    const digits = String(num).replace(/[^0-9]/g, "");
+    return digits; // wa.me expects country code + number without '+'
+  };
+
+  const buildWhatsappHref = (num) => {
+    const cleaned = normalizeWhatsapp(num);
+    if (!cleaned) return "#";
+    // Pre-fill a short message — change as needed
+    const text = encodeURIComponent(
+      "Hi, I would like to chat about your courses."
+    );
+    return `https://wa.me/${cleaned}?text=${text}`;
+  };
+
+  const buildTelHref = (num) => {
+    if (!num) return "#";
+    // Keep only + and digits for tel: but browsers accept digits with +
+    const tel = String(num).trim();
+    return `tel:${tel}`;
+  };
 
   return (
     <section className={styles.page}>
@@ -259,13 +289,13 @@ export default function ContactUs({
             Our support team is here to help you
           </p>
 
-          <a href="/contact" className={styles.contactUsBtn}>
+          <a href="#" className={styles.contactUsBtn}>
             CONTACT US
           </a>
 
           <p className={styles.footerLine}>
             <span className={styles.footerLabel}>Toll Free :</span>{" "}
-            <span>1-866-996-9642</span>
+            <span>{phoneNumber || "1-866-996-9642"}</span>
           </p>
 
           <p className={styles.footerLine}>
@@ -274,9 +304,23 @@ export default function ContactUs({
           </p>
 
           <div className={styles.footerLinks}>
-            <a href="#livechat">Live Chat</a>
-            <a href="mailto:brainbuzzacademy@gmail.com">Email Us</a>
-            <a href="#book">Book an Appointment</a>
+            {/* Live Chat -> opens WhatsApp using dynamic whatsappNumber prop */}
+            <a
+              id="livechat"
+              href={buildWhatsappHref(whatsappNumber)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Live Chat
+            </a>
+
+            {/* Email fallback stays as mailto */}
+            <a href={`mailto:brainbuzzacademy@gmail.com`}>Email Us</a>
+
+            {/* Book an Appointment -> initiates call using dynamic phoneNumber prop */}
+            <a id="book" href={buildTelHref(phoneNumber)}>
+              Book an Appointment
+            </a>
           </div>
         </div>
       </div>

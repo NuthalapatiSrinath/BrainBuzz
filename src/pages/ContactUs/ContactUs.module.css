@@ -1,384 +1,380 @@
 /* ContactUs.module.css - updated layout for 50/50 equal height columns */
 
 .page {
-    width: 100%;
-    padding: 36px 36px;
-    background: linear-gradient(90deg, #fff6e8 0%, #ffffff 10%, #fff6e8 200%);
-    box-sizing: border-box;
-    /* background: transparent; */
+  width: 100%;
+  padding: 36px 36px;
+  background: linear-gradient(90deg, #fff6e8 0%, #ffffff 10%, #fff6e8 200%);
+  box-sizing: border-box;
+  /* background: transparent; */
 }
 
 .container {
-    
-    /* max-width: 1180px; */
-    margin: 0 auto;
+  /* max-width: 1180px; */
+  margin: 0 auto;
 }
 
 /* Top row: title + icons aligned horizontally */
 .topRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
-    gap: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 16px;
 }
 
 .title {
-    color: var(--Primary_Color);
-    font-weight: 700;
-    font-size: 20px;
-    margin: 0;
+  color: var(--Primary_Color);
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0;
 }
 
 /* Icons aligned horizontally (kept small) */
 .headerIcons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 /* ensure mapWrap is relative so overlay positions correctly */
 .mapWrap {
-    position: relative;
-    /* added/ensure this exists */
-    width: 100%;
-    height: 520px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 8px 24px rgba(10, 30, 80, 0.06);
+  position: relative;
+  /* added/ensure this exists */
+  width: 100%;
+  height: 520px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(10, 30, 80, 0.06);
 }
 
 /* Info card overlay (top-left) */
 .mapInfo {
-    position: absolute;
-    left: 18px;
-    top: 18px;
-    z-index: 30;
-    width: 300px;
-    /* card width - tweak if needed */
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 14px 14px;
-    box-shadow: 0 12px 30px rgba(10, 30, 80, 0.12);
-    color: #1f2d3d;
-    font-size: 13px;
-    line-height: 1.4;
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  z-index: 30;
+  width: 300px;
+  /* card width - tweak if needed */
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 14px 14px;
+  box-shadow: 0 12px 30px rgba(10, 30, 80, 0.12);
+  color: #1f2d3d;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 /* Title */
 .mapInfoTitle {
-    font-weight: 700;
-    color: var(--Primary_Color);
-    font-size: 16px;
-    margin-bottom: 8px;
+  font-weight: 700;
+  color: var(--Primary_Color);
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
 /* Address text */
 .mapInfoAddress {
-    color: #222;
-    font-size: 13px;
-    margin-bottom: 10px;
-    opacity: 0.95;
+  color: #222;
+  font-size: 13px;
+  margin-bottom: 10px;
+  opacity: 0.95;
 }
 
 /* rating + reviews row */
 .mapInfoRow {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 .mapInfoRating {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #222;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #222;
 }
 
 .stars {
-    color: #f5b301;
-    /* star color */
-    font-size: 14px;
-    letter-spacing: 1px;
-    margin-left: 4px;
+  color: #f5b301;
+  /* star color */
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin-left: 4px;
 }
 
 /* reviews */
 .mapInfoReviews {
-    font-weight: 600;
-    color: #333;
-    font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  font-size: 12px;
 }
 
 /* link at bottom */
 .mapInfoLink {
-    display: inline-block;
-    color: var(--Primary_Color);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 13px;
-    margin-top: 4px;
+  display: inline-block;
+  color: var(--Primary_Color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  margin-top: 4px;
 }
 /* Footer Info Section */
 .footerInfo {
-    margin-top: 60px;
-    text-align: center;
-    font-family: "Poppins", sans-serif;
-    padding: 40px 12px;
-    background: transparent;
-    color: #000000;
+  margin-top: 60px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  padding: 40px 12px;
+  background: transparent;
+  color: #000000;
 }
-
-
 
 /* Subheading */
 .helpSubtitle {
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 24px;
-    color: #000;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  color: #000;
 }
 
 /* Contact Us button-style link */
 .contactUsBtn {
-    display: inline-block;
-    font-weight: 500;
-    font-size: 20px;
-    color: #1f4d9d;
-    text-decoration: underline;
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 3px;
-    line-height: 48px;
-    letter-spacing: 0.5px;
-    margin-bottom: 20px;
+  display: inline-block;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: context-menu;
+  color: #1f4d9d;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  line-height: 48px;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
 }
 
 /* Toll Free / Email lines */
 .footerLine {
-    font-size: 18px;
-    margin: 8px 0;
-    color: #000;
+  font-size: 18px;
+  margin: 8px 0;
+  color: #000;
 }
 
 .footerLabel {
-    color: #1f4d9d;
-    font-weight: 600;
+  color: #1f4d9d;
+  font-weight: 600;
 }
 
 /* Footer navigation links row */
 .footerLinks {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    flex-wrap: wrap;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
 }
 
 .footerLinks a {
-    font-size: 18px;
-    color: #1f4d9d;
-    text-decoration: underline;
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 3px;
-    transition: color 0.2s ease;
+  font-size: 18px;
+  color: #1f4d9d;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
 }
 
 .footerLinks a:hover {
-    color: #003b8a;
+  color: #003b8a;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .helpTitle {
-        font-size: 20px;
-    }
+  .helpTitle {
+    font-size: 20px;
+  }
 
-    .helpSubtitle {
-        font-size: 18px;
-    }
+  .helpSubtitle {
+    font-size: 18px;
+  }
 
-    .contactUsBtn {
-        font-size: 18px;
-    }
+  .contactUsBtn {
+    font-size: 18px;
+  }
 
-    .footerLinks a {
-        font-size: 16px;
-    }
+  .footerLinks a {
+    font-size: 16px;
+  }
 }
 /* small screen: shrink/stack card slightly and avoid overflowing */
 @media (max-width: 780px) {
-    .mapInfo {
-       display: none;
-    }
+  .mapInfo {
+    display: none;
+  }
 }
 /* two-column layout: 50% / 50% and equal-height */
 .grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.75fr;
-    /* equal halves */
-    gap: 28px;
-    align-items: stretch;
-    /* make children stretch to same height */
+  display: grid;
+  grid-template-columns: 1.2fr 0.75fr;
+  /* equal halves */
+  gap: 28px;
+  align-items: stretch;
+  /* make children stretch to same height */
 }
 
 /* Map area - fill its column and let inner iframe be 100% height */
 .mapWrap {
-    width: 100%;
-    height: 520px;
-    /* desktop starting height; can be adjusted */
-    border-radius: 12px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 8px 24px rgba(10, 30, 80, 0.06);
-    display: block;
+  width: 100%;
+  height: 520px;
+  /* desktop starting height; can be adjusted */
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(10, 30, 80, 0.06);
+  display: block;
 }
 
 /* Ensure iframe fills the mapWrap height */
 .mapIframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  object-fit: cover;
 }
 
 /* Right column wrapper - make it stretch like mapWrap */
 .formWrap {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    height: 520px;
-    /* same as mapWrap to ensure equal height */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 520px;
+  /* same as mapWrap to ensure equal height */
 }
 
 /* top-right small icons inside header no longer needed here but kept for fallback */
 .socialRow {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-bottom: 4px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 4px;
 }
 
 .socialLink {
-    display: inline-block;
-    width: 28px;
-    height: 28px;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
 }
 
 .socialIcon {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* formCard must fill the right column vertically */
 .formCard {
-    background: rgba(237, 244, 255, 0.95);
-    padding: 22px;
-    border-radius: 12px;
-    box-shadow: 0 14px 40px rgba(10, 30, 80, 0.08);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    /* fill the formWrap column */
+  background: rgba(237, 244, 255, 0.95);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(10, 30, 80, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  /* fill the formWrap column */
 }
 
 /* content inside card */
 .formInner {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 /* Form title centered (keeps as before) */
 .formTitle {
-    text-align: center;
-    margin-bottom: 6px;
-    font-weight: 600;
+  text-align: center;
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 
 /* Make the message textarea box visually large and stretch as needed */
 .form .textarea {
-    min-height: 160px;
-    /* if your Input handles textarea sizing, this is backup */
+  min-height: 160px;
+  /* if your Input handles textarea sizing, this is backup */
 }
 
 /* actions area (button) pinned to bottom */
 .formActions {
-    margin-top: 12px;
+  margin-top: 12px;
 }
 
 /* messages */
 .successText {
-    color: var(--Success_Color);
-    font-weight: 600;
-    text-align: center;
+  color: var(--Success_Color);
+  font-weight: 600;
+  text-align: center;
 }
 
 .errorText {
-    color: var(--Error_Color);
-    font-weight: 600;
-    text-align: center;
+  color: var(--Error_Color);
+  font-weight: 600;
+  text-align: center;
 }
 
 /* Footer info area */
 .footerInfo {
-    margin-top: 48px;
-    text-align: center;
-    padding: 36px 12px;
+  margin-top: 48px;
+  text-align: center;
+  padding: 36px 12px;
 }
 
 /* Main Heading */
 .helpTitle {
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--Black_Color);
-    /* margin-bottom: 6px; */
-    line-height: 1.3;
-    /* text-decoration: underline; */
-    /* text-decoration-color: #000; */
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--Black_Color);
+  /* margin-bottom: 6px; */
+  line-height: 1.3;
+  /* text-decoration: underline; */
+  /* text-decoration-color: #000; */
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 .helpSubtitle {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 /* Responsive behavior */
 @media (max-width: 1024px) {
-
-    .mapWrap,
-    .formWrap {
-        height: 460px;
-    }
+  .mapWrap,
+  .formWrap {
+    height: 460px;
+  }
 }
 
 @media (max-width: 780px) {
+  /* stack into single column on small screens */
+  .topRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 
-    /* stack into single column on small screens */
-    .topRow {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-    .grid {
-        grid-template-columns: 1fr;
-    }
+  .mapWrap,
+  .formWrap {
+    height: auto;
+  }
 
-    .mapWrap,
-    .formWrap {
-        height: auto;
-    }
+  .formCard {
+    height: auto;
+  }
 
-    .formCard {
-        height: auto;
-    }
-
-    .headerIcons {
-        justify-self: end;
-        margin-left: auto;
-    }
+  .headerIcons {
+    justify-self: end;
+    margin-left: auto;
+  }
 }

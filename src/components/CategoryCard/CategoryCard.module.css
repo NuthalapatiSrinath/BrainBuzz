@@ -1,0 +1,165 @@
+/* Fixed card size so all cards are equal and grid doesn't jump */
+.card {
+  width: 320px; /* fixed width for consistent grid columns */
+  min-height: 320px; /* fixed height so text & buttons fit */
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(23, 32, 46, 0.06);
+  padding: 28px 22px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.3, 1),
+    box-shadow 260ms ease;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transform-origin: center;
+  /* Keep layout stable when transformed (no reflow) */
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* Subtle lift for card hover/focus (visual only — doesn't affect layout) */
+.card:hover,
+.card:focus {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 18px 48px rgba(23, 32, 46, 0.12);
+  outline: none;
+}
+
+/* Inner container to control vertical layout */
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: center;
+}
+
+/* logo circle */
+.logoWrap {
+  width: 84px;
+  height: 84px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+    circle at 30% 20%,
+    rgba(61, 104, 190, 0.06),
+    rgba(0, 0, 0, 0.01)
+  );
+  box-shadow: inset 0 -6px 14px rgba(0, 0, 0, 0.02);
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  display: block;
+  transition: transform 320ms ease;
+}
+
+/* title */
+.title {
+  margin: 4px 0 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #18212b;
+  line-height: 1.1;
+}
+
+/* description text - always visible */
+.description {
+  margin: 8px 0 6px 0;
+  color: #6b7680;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 92%;
+  flex: 1 1 auto; /* allow description to take available vertical space */
+}
+
+/* Button wrapper to keep button at consistent vertical position */
+.btnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-top: 6px;
+  flex-shrink: 0;
+}
+
+/* CTA button — only this grows on hover */
+.cta {
+  appearance: none;
+  border: 1.6px solid rgba(61, 104, 190, 0.18);
+  background: #ffffff;
+  color: #2f58b4;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1),
+    box-shadow 220ms ease, background 180ms ease;
+  will-change: transform;
+}
+
+/* When pointer hovers the button -> scale up only the button */
+.cta:hover,
+.cta:focus {
+  transform: scale(1.08);
+  box-shadow: 0 10px 26px rgba(47, 88, 180, 0.12);
+  background: rgba(47, 88, 180, 0.03);
+  outline: none;
+}
+
+/* make the button slightly larger when the parent card is hovered too (but still only button growth) */
+.card:hover .cta {
+  transform: scale(1.06);
+}
+
+/* Accessibility focus ring */
+.card:focus-visible {
+  box-shadow: 0 18px 48px rgba(23, 32, 46, 0.12),
+    0 0 0 4px rgba(61, 104, 190, 0.08);
+}
+
+/* Keep the card consistent on small screens */
+@media (max-width: 1100px) {
+  .card {
+    width: 46%;
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 720px) {
+  .card {
+    width: 100%;
+    min-height: 220px;
+    padding: 18px;
+  }
+  .logoWrap {
+    width: 68px;
+    height: 68px;
+  }
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+  .title {
+    font-size: 18px;
+  }
+  .description {
+    font-size: 13px;
+  }
+  .cta {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+}

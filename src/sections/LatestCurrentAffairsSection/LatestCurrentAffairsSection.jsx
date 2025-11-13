@@ -19,12 +19,12 @@ export default function LatestCurrentAffairsSection() {
       color: "#f2b6c3",
       subId: "ias",
     },
-    // {
-    //   id: "cgl",
-    //   title: "SSC CGL Current Affairs",
-    //   color: "#bfe6ee",
-    //   subId: "general",
-    // },
+    {
+      id: "cgl",
+      title: "SSC CGL Current Affairs",
+      color: "#bfe6ee",
+      subId: "general",
+    },
     {
       id: "ssc",
       title: "SSC Current Affairs",
@@ -37,54 +37,54 @@ export default function LatestCurrentAffairsSection() {
       color: "#c9f0e1",
       subId: "appsc-1",
     },
-    // {
-    //   id: "banking",
-    //   title: "Banking Current Affairs",
-    //   color: "#efe6ff",
-    //   subId: "banking-news",
-    // },
-    // {
-    //   id: "state",
-    //   title: "State Current Affairs",
-    //   color: "#fff0e0",
-    //   subId: "state-general",
-    // },
-    // {
-    //   id: "international",
-    //   title: "International Current Affairs",
-    //   color: "#e8f8ff",
-    //   subId: "world",
-    // },
-    // {
-    //   id: "books",
-    //   title: "Books & Authors",
-    //   color: "#fff6e6",
-    //   subId: "books-authors",
-    // },
-    // {
-    //   id: "sports",
-    //   title: "Sports Current Affairs",
-    //   color: "#f9f0ff",
-    //   subId: "sports-main",
-    // },
-    // {
-    //   id: "awards",
-    //   title: "Awards Current Affairs",
-    //   color: "#f0fff4",
-    //   subId: "awards-list",
-    // },
-    // {
-    //   id: "economy",
-    //   title: "Economy Current Affairs",
-    //   color: "#f4f7ff",
-    //   subId: "economy-main",
-    // },
-    // {
-    //   id: "science",
-    //   title: "Science & Tech",
-    //   color: "#eef9ff",
-    //   subId: "science-tech",
-    // },
+    {
+      id: "banking",
+      title: "Banking Current Affairs",
+      color: "#efe6ff",
+      subId: "banking-news",
+    },
+    {
+      id: "state",
+      title: "State Current Affairs",
+      color: "#fff0e0",
+      subId: "state-general",
+    },
+    {
+      id: "international",
+      title: "International Current Affairs",
+      color: "#e8f8ff",
+      subId: "world",
+    },
+    {
+      id: "books",
+      title: "Books & Authors",
+      color: "#fff6e6",
+      subId: "books-authors",
+    },
+    {
+      id: "sports",
+      title: "Sports Current Affairs",
+      color: "#f9f0ff",
+      subId: "sports-main",
+    },
+    {
+      id: "awards",
+      title: "Awards Current Affairs",
+      color: "#f0fff4",
+      subId: "awards-list",
+    },
+    {
+      id: "economy",
+      title: "Economy Current Affairs",
+      color: "#f4f7ff",
+      subId: "economy-main",
+    },
+    {
+      id: "science",
+      title: "Science & Tech",
+      color: "#eef9ff",
+      subId: "science-tech",
+    },
   ];
 
   return (

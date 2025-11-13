@@ -49,7 +49,6 @@ const cards = [
   },
 ];
 
-
 export default function AboutUsPage() {
   return (
     <section className={styles.page}>
@@ -74,6 +73,29 @@ export default function AboutUsPage() {
               className={styles.heroImg}
             />
           </div>
+        </div>
+        <div className={styles.aboutText}>
+          <h3>Welcome to Brain Buzz Academy</h3>
+          <p>
+            Brain Buzz Academy is a dedicated learning platform designed to help
+            students achieve success in competitive examinations. Our mission is
+            to simplify learning through structured courses, high-quality study
+            material, test series, quizzes, and current affairs – all crafted by
+            experienced educators.
+          </p>
+
+          <p>
+            Whether you’re preparing for UPSC, SSC, Banking, State PSC, Police
+            exams, or simply want to strengthen your general knowledge, Brain
+            Buzz provides well-organized, easy-to-understand resources to guide
+            your learning journey.
+          </p>
+
+          <p>
+            With engaging video lessons, daily practice quizzes, previous
+            question papers, and interactive live sessions, we aim to make exam
+            preparation more effective, accessible, and enjoyable.
+          </p>
         </div>
 
         <p className={styles.subtitle}>Every Thing you need to know</p>

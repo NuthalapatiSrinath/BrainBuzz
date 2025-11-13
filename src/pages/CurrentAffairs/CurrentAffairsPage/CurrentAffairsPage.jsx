@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // ✅ navigation hook
 import styles from "./CurrentAffairsPage.module.css";
+import CategoryCard from "../../../components/CategoryCard/CategoryCard"; // new component
 
 export default function CurrentAffairsPage() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ export default function CurrentAffairsPage() {
     { id: 11, name: "OTHERS…", logo: "/images/brainbuzz.png", slug: "others" },
   ];
 
-  // ✅ Navigate to subcategory page
+  // ✅ Navigate to subcategory page (keeps behaviour unchanged)
   const handleNavigate = (slug) => {
     navigate(`/currentaffairs/${slug}`);
   };
@@ -73,22 +74,15 @@ export default function CurrentAffairsPage() {
 
         <div className={styles.grid}>
           {categories.map((cat) => (
-            <div
+            <CategoryCard
               key={cat.id}
-              className={styles.card}
-              onClick={() => handleNavigate(cat.slug)} // ✅ Click to navigate
-              style={{ cursor: "pointer" }}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ")
-                  handleNavigate(cat.slug);
-              }}
-              aria-label={`Go to ${cat.name} current affairs`}
-            >
-              <img src={cat.logo} alt={cat.name} className={styles.cardImage} />
-              <div className={styles.cardTitle}>{cat.name}</div>
-            </div>
+              id={cat.id}
+              name={cat.name}
+              logo={cat.logo}
+              slug={cat.slug}
+              description="Explore Structured Courses for SSC CGL, CHSL & More"
+              onClick={handleNavigate}
+            />
           ))}
         </div>
       </section>
