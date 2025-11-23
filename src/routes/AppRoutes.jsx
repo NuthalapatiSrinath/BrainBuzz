@@ -47,6 +47,7 @@ import PreviousQuestionPapers from "../pages/PreviousQuesitonPapers/PreviousQues
 import PreviousPapersSubcategories from "../pages/PreviousQuesitonPapers/PreviousPapersSubcategories/PreviousPapersSubcategories.jsx";
 import CategoryPublications from "../sections/CategoryPublications/CategoryPublications";
 import PaperDetail from "../sections/CategoryPublications/PaperDetail";
+import AllCategoriesPage from "../pages/AllCategoriesPage/AllCategoriesPage.jsx";
 
 function AppRoutes() {
   return (
@@ -75,6 +76,7 @@ function AppRoutes() {
             path="currentaffairs/:category/:subId/:articleId"
             element={<CurrentAffairsArticlePage />}
           />
+          <Route path="/currentaffairs/all" element={<AllCategoriesPage />} />
 
           {/* ============================================================
               📝 DAILY QUIZZES FLOW

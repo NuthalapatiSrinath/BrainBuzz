@@ -15,27 +15,27 @@ export default function ContactUs({
   // socialLinks kept as before
   socialLinks = [
     {
-      href: "https://instagram.com",
+      href: "https://www.instagram.com/brainbuzzacademy/",
       imgSrc: "/icons/instagram.png",
       alt: "Instagram",
     },
     {
-      href: "https://linkedin.com",
+      href: "https://www.linkedin.com/in/brainbuzz-academy-79921718a/",
       imgSrc: "/icons/linkedin.png",
       alt: "LinkedIn",
     },
     {
-      href: "https://twitter.com",
+      href: "https://x.com/brainbuzzacadmy",
       imgSrc: "/icons/twitter.png",
       alt: "Twitter",
     },
     {
-      href: "https://youtube.com",
+      href: "https://www.youtube.com/channel/UCFgk76S9FPSvDz_CViuAj3Q",
       imgSrc: "/icons/youtube.png",
       alt: "YouTube",
     },
     {
-      href: "https://facebook.com",
+      href: "https://www.facebook.com/brainbuzzakademy",
       imgSrc: "/icons/facebook.png",
       alt: "Facebook",
     },
@@ -44,7 +44,7 @@ export default function ContactUs({
   // whatsappNumber should be a phone number string (can include + or spaces) e.g. "+919876543210"
   whatsappNumber = "9346532339", // default empty — pass this prop dynamically
   // phoneNumber used for tel: (Book an Appointment). Example: "+919876543210" or "180099699642"
-  phoneNumber = "9346532339",
+  phoneNumber = "+91 9505333093",
 } = {}) {
   const [form, setForm] = useState({
     name: "",
@@ -319,7 +319,7 @@ export default function ContactUs({
 
             {/* Book an Appointment -> initiates call using dynamic phoneNumber prop */}
             <a id="book" href={buildTelHref(phoneNumber)}>
-              Book an Appointment
+              Call Us
             </a>
           </div>
         </div>

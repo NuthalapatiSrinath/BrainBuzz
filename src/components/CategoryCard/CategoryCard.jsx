@@ -9,47 +9,34 @@ export default function CategoryCard({
   description = "",
   buttonLabel = "View Courses",
   onClick,
+  onButtonClick,
   ariaLabel,
+  hideLogo = false, // new prop to explicitly hide logo
 }) {
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      onClick && onClick(slug);
-    }
-  };
+  const hasLogo = !!logo && !hideLogo;
 
   return (
-    <div
-      className={styles.card}
-      onClick={() => onClick && onClick(slug)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-      aria-label={ariaLabel || `Go to ${name} current affairs`}
-    >
+    <div className={styles.card} aria-label={ariaLabel || name}>
       <div className={styles.inner}>
-        <div className={styles.logoWrap}>
-          <img src={logo} alt={name} className={styles.logo} />
-        </div>
+        {hasLogo && (
+          <div className={styles.logoWrap} data-slug={slug}>
+            <img src={logo} alt={name} className={styles.logo} />
+          </div>
+        )}
 
         <h3 className={styles.title}>{name}</h3>
 
-        <p className={styles.description}>{description}</p>
+        {description && <p className={styles.description}>{description}</p>}
 
         <div className={styles.btnWrap}>
           <button
             type="button"
             className={styles.cta}
-            onClick={(e) => {
-              // stop outer div click only if the button has its own action,
-              // but keep default to call parent's onClick too (consistent with old behavior)
-              e.stopPropagation();
-              onClick && onClick(slug);
-            }}
+            onClick={() => onButtonClick && onButtonClick(slug)}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                onClick && onClick(slug);
+                onButtonClick && onButtonClick(slug);
               }
             }}
           >
@@ -57,6 +44,16 @@ export default function CategoryCard({
           </button>
         </div>
       </div>
+
+      {/* Make entire card clickable via onClick (card body) */}
+      {onClick && (
+        <button
+          type="button"
+          className={styles.cardOverlayButton}
+          onClick={() => onClick(slug)}
+          aria-label={`Open ${name}`}
+        />
+      )}
     </div>
   );
 }

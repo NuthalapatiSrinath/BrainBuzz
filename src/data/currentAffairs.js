@@ -4,18 +4,78 @@
 
 const CURRENT_AFFAIRS = {
   categories: [
-    { key: "upsc", title: "UPSC", hero: "/images/upsc.png", logo: "/images/upsc.png" },
-    { key: "cgl", title: "SSC CGL", hero: "/images/cgl.png", logo: "/images/cgl.png" },
-    { key: "ssc", title: "SSC", hero: "/images/ssc.png", logo: "/images/ssc.png" },
-    { key: "appsc", title: "APPSC", hero: "/images/appsc.png", logo: "/images/appsc.png" },
-    { key: "banking", title: "Banking", hero: "/images/banking-hero.png", logo: "/images/banking.png" },
-    { key: "state", title: "State News", hero: "/images/state-hero.png", logo: "/images/state.png" },
-    { key: "international", title: "International", hero: "/images/international-hero.png", logo: "/images/international.png" },
-    { key: "books", title: "Books & Authors", hero: "/images/books-hero.png", logo: "/images/books.png" },
-    { key: "sports", title: "Sports", hero: "/images/sports-hero.png", logo: "/images/sports.png" },
-    { key: "awards", title: "Awards", hero: "/images/awards-hero.png", logo: "/images/awards.png" },
-    { key: "economy", title: "Economy", hero: "/images/economy-hero.png", logo: "/images/economy.png" },
-    { key: "science", title: "Science & Tech", hero: "/images/science-hero.png", logo: "/images/science.png" },
+    {
+      key: "upsc",
+      title: "UPSC",
+      hero: "/images/upsc.png",
+      logo: "/images/upsc.png",
+    },
+    {
+      key: "cgl",
+      title: "SSC CGL",
+      hero: "/images/cgl.png",
+      logo: "/images/cgl.png",
+    },
+    {
+      key: "ssc",
+      title: "SSC",
+      hero: "/images/ssc.png",
+      logo: "/images/ssc.png",
+    },
+    {
+      key: "appsc",
+      title: "APPSC",
+      hero: "/images/appsc.png",
+      logo: "/images/appsc.png",
+    },
+    {
+      key: "banking",
+      title: "Banking",
+      hero: "/images/banking-hero.png",
+      logo: "/images/banking.png",
+    },
+    {
+      key: "state",
+      title: "State News",
+      hero: "/images/state-hero.png",
+      logo: "/images/state.png",
+    },
+    {
+      key: "international",
+      title: "International",
+      hero: "/images/international-hero.png",
+      logo: "/images/international.png",
+    },
+    {
+      key: "books",
+      title: "Books & Authors",
+      hero: "/images/books-hero.png",
+      logo: "/images/books.png",
+    },
+    {
+      key: "sports",
+      title: "Sports",
+      hero: "/images/sports-hero.png",
+      logo: "/images/sports.png",
+    },
+    {
+      key: "awards",
+      title: "Awards",
+      hero: "/images/awards-hero.png",
+      logo: "/images/awards.png",
+    },
+    {
+      key: "economy",
+      title: "Economy",
+      hero: "/images/economy-hero.png",
+      logo: "/images/economy.png",
+    },
+    {
+      key: "science",
+      title: "Science & Tech",
+      hero: "/images/science-hero.png",
+      logo: "/images/science.png",
+    },
   ],
 
   subcategories: {
@@ -29,7 +89,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "upsc-a1",
             title: "Ladakh Protests over Statehood Demand",
-            excerpt: "Protests in Ladakh demanding statehood intensified after local calls ...",
+            excerpt:
+              "Protests in Ladakh demanding statehood intensified after local calls ...",
             image: "/images/worldcup.png",
             date: "2025-09-25T09:00:00Z",
             scope: "State",
@@ -38,7 +99,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "upsc-a2",
             title: "Mission Sudarshan Chakra",
-            excerpt: "The government launched Mission Sudarshan Chakra to modernize ...",
+            excerpt:
+              "The government launched Mission Sudarshan Chakra to modernize ...",
             image: "/images/worldcup.png",
             date: "2025-09-20T10:00:00Z",
             scope: "National",
@@ -54,7 +116,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "upsc-a4",
             title: "2025 Vice Presidential Election in India",
-            excerpt: "A timeline and candidate summary for the 2025 VP election ...",
+            excerpt:
+              "A timeline and candidate summary for the 2025 VP election ...",
             image: "/images/worldcup.png",
             date: "2025-07-08T10:00:00Z",
             scope: "National",
@@ -81,7 +144,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "cgl-a2",
             title: "National Education Policy updates",
-            excerpt: "New guidelines for higher education have been proposed ...",
+            excerpt:
+              "New guidelines for higher education have been proposed ...",
             image: "/images/worldcup.png",
             date: "2025-06-19T10:00:00Z",
             scope: "National",
@@ -100,7 +164,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "ssc-a1",
             title: "State level reforms and elections",
-            excerpt: "Elections in several states resulted in new leadership ...",
+            excerpt:
+              "Elections in several states resulted in new leadership ...",
             image: "/images/worldcup.png",
             date: "2025-09-14T10:00:00Z",
             scope: "State",
@@ -119,7 +184,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "appsc-a1",
             title: "AP: Ladakh Protests overview",
-            excerpt: "Regional perspective on Ladakh protests and state administration ...",
+            excerpt:
+              "Regional perspective on Ladakh protests and state administration ...",
             image: "/images/worldcup.png",
             date: "2025-09-25T09:00:00Z",
             scope: "State",
@@ -138,7 +204,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "bank-a1",
             title: "New RBI guidelines on digital lending",
-            excerpt: "RBI released a fresh round of rules for digital lenders ...",
+            excerpt:
+              "RBI released a fresh round of rules for digital lenders ...",
             image: "/images/worldcup.png",
             date: "2025-09-18T10:00:00Z",
             scope: "Banking",
@@ -146,7 +213,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "bank-a2",
             title: "Bank merger announced",
-            excerpt: "Two public sector banks are set to merge to improve efficiency ...",
+            excerpt:
+              "Two public sector banks are set to merge to improve efficiency ...",
             image: "/images/worldcup.png",
             date: "2025-08-05T10:00:00Z",
             scope: "Banking",
@@ -184,7 +252,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "int-a1",
             title: "Global summit outcomes – Climate pact",
-            excerpt: "World leaders agreed to a new climate pact in the summit ...",
+            excerpt:
+              "World leaders agreed to a new climate pact in the summit ...",
             image: "/images/worldcup.png",
             date: "2025-09-02T10:00:00Z",
             scope: "International",
@@ -192,7 +261,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "int-a2",
             title: "Cross-border agreements signed",
-            excerpt: "Two neighboring countries signed trade and security agreements ...",
+            excerpt:
+              "Two neighboring countries signed trade and security agreements ...",
             image: "/images/worldcup.png",
             date: "2025-07-22T10:00:00Z",
             scope: "International",
@@ -211,7 +281,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "books-a1",
             title: "Notable releases this month",
-            excerpt: "A curated list of important books and authors to follow ...",
+            excerpt:
+              "A curated list of important books and authors to follow ...",
             image: "/images/worldcup.png",
             date: "2025-09-12T10:00:00Z",
             scope: "Books & Authors",
@@ -238,7 +309,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "sports-a2",
             title: "National players in international leagues",
-            excerpt: "Players from the country played key roles in recent leagues ...",
+            excerpt:
+              "Players from the country played key roles in recent leagues ...",
             image: "/images/worldcup.png",
             date: "2025-09-01T10:00:00Z",
             scope: "Sports",
@@ -257,7 +329,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "awards-a1",
             title: "National awards announced",
-            excerpt: "The government announced national honors for multiple contributors ...",
+            excerpt:
+              "The government announced national honors for multiple contributors ...",
             image: "/images/worldcup.png",
             date: "2025-08-31T10:00:00Z",
             scope: "Awards",
@@ -276,7 +349,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "eco-a1",
             title: "Inflation trends and policy stance",
-            excerpt: "Analysis of inflation and expected central bank moves ...",
+            excerpt:
+              "Analysis of inflation and expected central bank moves ...",
             image: "/images/worldcup.png",
             date: "2025-09-15T10:00:00Z",
             scope: "Economy",
@@ -295,7 +369,8 @@ const CURRENT_AFFAIRS = {
           {
             id: "sci-a1",
             title: "New satellite launched for remote sensing",
-            excerpt: "A new satellite will support agriculture and disaster monitoring ...",
+            excerpt:
+              "A new satellite will support agriculture and disaster monitoring ...",
             image: "/images/worldcup.png",
             date: "2025-09-05T10:00:00Z",
             scope: "Science",

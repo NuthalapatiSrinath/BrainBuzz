@@ -7,16 +7,18 @@ import CURRENT_AFFAIRS from "../../../data/currentAffairs";
 import CurrentAffairsArticleCard from "../../../components/CurrentAffairsArticleCard/CurrentAffairsArticleCard";
 import CurrentAffairsCard from "../../../components/CurrentAffairsCard/CurrentAffairsCard";
 import styles from "./CurrentAffairsArticlesPage.module.css";
+import {
+  getCategoryLanding,
+  getArticlesList,
+} from "../../../api/currentAffairs";
 
 /**
- * Layout:
- * Header
- * CategoryHeader
- * Filters row
- * -> TWO WIDGETS ROW:
- *    LEFT: CurrentAffairsCard that renders article cards inside (topArticleNodes)
- *    RIGHT: CurrentAffairsCard showing months list only (clicking month filters left + updates URL)
+ * CurrentAffairsArticlesPage (integrated)
+ * - header uses subcategory image (if available)
+ * - category header title uses subcategory title
+ * - language selection acts as a filter (no translation API)
  */
+
 export default function CurrentAffairsArticlesPage() {
   const { category, subId } = useParams();
   const navigate = useNavigate();
@@ -26,134 +28,353 @@ export default function CurrentAffairsArticlesPage() {
   const queryParams = new URLSearchParams(location.search);
   const initialMonth = queryParams.get("month");
 
+  const [lang, setLang] = useState(() => {
+    try {
+      return localStorage.getItem("bb_lang_code") || "en";
+    } catch {
+      return "en";
+    }
+  });
+
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedMonth, setSelectedMonth] = useState(initialMonth || null); // "YYYY-MM" or null
+  const [page, setPage] = useState(1);
+  const [limit] = useState(20);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // data from API or fallback
+  const [articlesData, setArticlesData] = useState({
+    articles: [],
+    months: [],
+    meta: { total: 0, page: 1, limit },
+  });
+  const [categoryMeta, setCategoryMeta] = useState(null);
+  const [subcategoryMeta, setSubcategoryMeta] = useState(null); // new: metadata for current subcategory (logo/title)
+
   const catKey = String(category || "").toLowerCase();
 
-  // keep selectedMonth in sync with URL changes (so navigation from other pages works)
+  // keep selectedMonth in sync with URL changes
   useEffect(() => {
     const q = new URLSearchParams(location.search);
     const m = q.get("month");
     setSelectedMonth(m || null);
   }, [location.search]);
 
-  // lookup category & subcategory
-  const { subcategory, categoryMeta } = useMemo(() => {
-    const catMeta =
-      (CURRENT_AFFAIRS.categories || []).find(
-        (c) => String(c.key).toLowerCase() === catKey
-      ) || null;
+  // fetch category landing once: set categoryMeta and subcategoryMeta (if present)
+  useEffect(() => {
+    let mounted = true;
+    async function loadCategoryLandingForMeta() {
+      if (!category) return;
+      try {
+        console.log(
+          `[ArticlesPage] fetch -> getCategoryLanding("${category}") for landing`
+        );
+        const res = await getCategoryLanding(category);
+        console.log("[ArticlesPage] getCategoryLanding response:", res);
+        if (!mounted) return;
 
-    let subsRaw = CURRENT_AFFAIRS.subcategories?.[catKey];
-    if (!subsRaw)
-      subsRaw = CURRENT_AFFAIRS.subcategories?.[catKey?.toUpperCase()] || [];
-    const subsArray = Array.isArray(subsRaw)
-      ? subsRaw
-      : Object.values(subsRaw || {});
-    const sub =
-      subsArray.find(
-        (s) => String(s.id).toLowerCase() === String(subId || "").toLowerCase()
-      ) || null;
+        if (res && res.success && res.data) {
+          const cat = res.data.category || null;
+          setCategoryMeta(cat);
 
-    return { subcategory: sub, categoryMeta: catMeta };
-  }, [catKey, subId]);
+          // try to find the subcategory metadata by subId
+          const tiles = res.data.tiles || res.data.subcategories || [];
+          // tiles may be array of sub objects; be defensive
+          let found = null;
+          if (Array.isArray(tiles)) {
+            found = tiles.find((s) => {
+              const sid =
+                s._id || s.id || s.slug || String(s.key || "").toLowerCase();
+              return (
+                String(sid).toLowerCase() === String(subId || "").toLowerCase()
+              );
+            });
+          } else if (tiles && typeof tiles === "object") {
+            // object keyed map
+            const vals = Object.values(tiles);
+            found = vals.find((s) => {
+              const sid =
+                s._id || s.id || s.slug || String(s.key || "").toLowerCase();
+              return (
+                String(sid).toLowerCase() === String(subId || "").toLowerCase()
+              );
+            });
+          }
+          if (found) {
+            setSubcategoryMeta(found);
+          } else {
+            // if not found, try to match within category's nested subcategories (defensive)
+            const alt = (res.data.subcategories || []).find
+              ? (res.data.subcategories || []).find((s) => {
+                  const sid = s._id || s.id || s.slug || s.key;
+                  return (
+                    String(sid).toLowerCase() ===
+                    String(subId || "").toLowerCase()
+                  );
+                })
+              : null;
+            if (alt) setSubcategoryMeta(alt);
+          }
+        } else {
+          // fallback static
+          const catMeta =
+            (CURRENT_AFFAIRS.categories || []).find(
+              (c) => String(c.key).toLowerCase() === catKey
+            ) || null;
+          setCategoryMeta(catMeta);
 
-  // helper: safe month key "YYYY-MM"
-  function monthKeyFromDate(d) {
-    try {
-      const dt = new Date(d);
-      if (Number.isNaN(dt.getTime())) return null;
-      const y = dt.getFullYear();
-      const m = (dt.getMonth() + 1).toString().padStart(2, "0");
-      return `${y}-${m}`;
-    } catch {
-      return null;
-    }
-  }
+          let subsRaw = CURRENT_AFFAIRS.subcategories?.[catKey];
+          if (!subsRaw)
+            subsRaw =
+              CURRENT_AFFAIRS.subcategories?.[catKey?.toUpperCase()] || [];
+          const subsArray = Array.isArray(subsRaw)
+            ? subsRaw
+            : Object.values(subsRaw || {});
+          const sub =
+            subsArray.find(
+              (s) =>
+                String(s.id).toLowerCase() === String(subId || "").toLowerCase()
+            ) || null;
+          setSubcategoryMeta(sub);
+        }
+      } catch (err) {
+        console.error("[ArticlesPage] getCategoryLanding failed:", err);
+        if (!mounted) return;
+        setError(
+          err?.message || "Failed to load category/subcategory metadata"
+        );
+        // fallback to static data as above
+        const catMeta =
+          (CURRENT_AFFAIRS.categories || []).find(
+            (c) => String(c.key).toLowerCase() === catKey
+          ) || null;
+        setCategoryMeta(catMeta);
 
-  // compute months list from subcategory articles
-  const months = useMemo(() => {
-    const arr = Array.isArray(subcategory?.articles)
-      ? subcategory.articles
-      : [];
-    const map = new Map();
-    for (const a of arr) {
-      const mk = monthKeyFromDate(a.date) || "unknown";
-      if (!map.has(mk)) {
-        const label =
-          mk === "unknown"
-            ? "Unknown"
-            : new Date(a.date).toLocaleString("en-US", {
-                month: "long",
-                year: "numeric",
-              });
-        map.set(mk, { key: mk, label, count: 0 });
+        let subsRaw = CURRENT_AFFAIRS.subcategories?.[catKey];
+        if (!subsRaw)
+          subsRaw =
+            CURRENT_AFFAIRS.subcategories?.[catKey?.toUpperCase()] || [];
+        const subsArray = Array.isArray(subsRaw)
+          ? subsRaw
+          : Object.values(subsRaw || {});
+        const sub =
+          subsArray.find(
+            (s) =>
+              String(s.id).toLowerCase() === String(subId || "").toLowerCase()
+          ) || null;
+        setSubcategoryMeta(sub);
       }
-      map.get(mk).count += 1;
+
+      return () => {
+        mounted = false;
+      };
     }
-    const items = Array.from(map.values()).sort((a, b) => {
-      if (a.key === "unknown") return 1;
-      if (b.key === "unknown") return -1;
-      return b.key.localeCompare(a.key) * -1; // newest first
-    });
-    return items;
-  }, [subcategory]);
 
-  // displayedArticles: sort, then filter by selectedMonth and activeFilter
-  const displayedArticles = useMemo(() => {
-    const arr = Array.isArray(subcategory?.articles)
-      ? [...subcategory.articles]
-      : [];
-    arr.sort((x, y) => {
-      const dx = x.date ? new Date(x.date).getTime() : 0;
-      const dy = y.date ? new Date(y.date).getTime() : 0;
-      return dy - dx;
-    });
+    loadCategoryLandingForMeta();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category, subId]);
 
-    let filtered = arr;
+  // fetch articles when category/subId/page/activeFilter/selectedMonth/lang changes
+  useEffect(() => {
+    let mounted = true;
+    async function loadArticles() {
+      if (!category || !subId) return;
 
-    // monthly filter
-    if (selectedMonth) {
-      filtered = filtered.filter(
-        (a) => monthKeyFromDate(a.date) === selectedMonth
+      setLoading(true);
+      setError(null);
+      console.log(
+        `[ArticlesPage] fetch -> getArticlesList("${category}", "${subId}", page=${page}, limit=${limit}, month=${selectedMonth}, filter=${activeFilter}, lang=${lang})`
       );
+
+      try {
+        // build query object
+        const qobj = { page, limit, lang };
+        if (selectedMonth) qobj.month = selectedMonth;
+
+        // if activeFilter is All -> no q, else send q as the filter label (backend will treat q as scope if matches)
+        if (activeFilter && activeFilter !== "All") qobj.q = activeFilter;
+
+        const res = await getArticlesList(category, subId, qobj);
+        console.log("[ArticlesPage] getArticlesList response:", res);
+
+        if (!mounted) return;
+
+        if (res && res.success && res.data) {
+          const items = (res.data.articles || []).map((a) => ({
+            id: a._id || a.id,
+            _id: a._id || a.id,
+            title: a.title,
+            excerpt: a.excerpt,
+            body: a.body,
+            date: a.date,
+            image: a.image,
+            scope: a.scope,
+            language: a.language || a.lang || "en",
+          }));
+
+          const months = (res.data.months || []).map((m) => ({
+            key: m.key,
+            label: m.label,
+            count: m.count,
+          }));
+
+          setArticlesData({
+            articles: items,
+            months,
+            meta: res.data.meta || { total: items.length, page, limit },
+          });
+        } else {
+          console.warn("[ArticlesPage] API returned no data — using fallback.");
+          // fallback logic: find local CURRENT_AFFAIRS
+          const catMeta =
+            (CURRENT_AFFAIRS.categories || []).find(
+              (c) => String(c.key).toLowerCase() === catKey
+            ) || null;
+
+          let subsRaw = CURRENT_AFFAIRS.subcategories?.[catKey];
+          if (!subsRaw)
+            subsRaw =
+              CURRENT_AFFAIRS.subcategories?.[catKey?.toUpperCase()] || [];
+          const subsArray = Array.isArray(subsRaw)
+            ? subsRaw
+            : Object.values(subsRaw || {});
+          const sub =
+            subsArray.find(
+              (s) =>
+                String(s.id).toLowerCase() === String(subId || "").toLowerCase()
+            ) || null;
+
+          let arr = Array.isArray(sub?.articles) ? sub.articles : [];
+          // filter by language when using fallback
+          if (lang) {
+            arr = arr.filter(
+              (x) => !x.language || String(x.language) === String(lang)
+            );
+          }
+          arr.sort(
+            (x, y) =>
+              (new Date(y.date).getTime() || 0) -
+              (new Date(x.date).getTime() || 0)
+          );
+          setArticlesData({
+            articles: arr.map((a) => ({
+              id: a._id || a.id,
+              _id: a._id || a.id,
+              title: a.title,
+              excerpt: a.excerpt,
+              body: a.body,
+              date: a.date,
+              image: a.image,
+              scope: a.scope,
+              language: a.language || "en",
+            })),
+            months: [],
+            meta: { total: arr.length, page, limit },
+          });
+        }
+      } catch (err) {
+        console.error("[ArticlesPage] getArticlesList failed:", err);
+        if (!mounted) return;
+        setError(err?.message || "Failed to load articles");
+        // fallback to local CURRENT_AFFAIRS similar to above
+        const catMeta =
+          (CURRENT_AFFAIRS.categories || []).find(
+            (c) => String(c.key).toLowerCase() === catKey
+          ) || null;
+
+        let subsRaw = CURRENT_AFFAIRS.subcategories?.[catKey];
+        if (!subsRaw)
+          subsRaw =
+            CURRENT_AFFAIRS.subcategories?.[catKey?.toUpperCase()] || [];
+        const subsArray = Array.isArray(subsRaw)
+          ? subsRaw
+          : Object.values(subsRaw || {});
+
+        const sub =
+          subsArray.find(
+            (s) =>
+              String(s.id).toLowerCase() === String(subId || "").toLowerCase()
+          ) || null;
+
+        let arr = Array.isArray(sub?.articles) ? sub.articles : [];
+        if (lang) {
+          arr = arr.filter(
+            (x) => !x.language || String(x.language) === String(lang)
+          );
+        }
+        arr.sort(
+          (x, y) =>
+            (new Date(y.date).getTime() || 0) -
+            (new Date(x.date).getTime() || 0)
+        );
+        setArticlesData({
+          articles: arr.map((a) => ({
+            id: a._id || a.id,
+            _id: a._id || a.id,
+            title: a.title,
+            excerpt: a.excerpt,
+            body: a.body,
+            date: a.date,
+            image: a.image,
+            scope: a.scope,
+            language: a.language || "en",
+          })),
+          months: [],
+          meta: { total: arr.length, page, limit },
+        });
+      } finally {
+        if (mounted) setLoading(false);
+        console.log("[ArticlesPage] loadArticles finished");
+      }
     }
 
-    // active scope filter
-    if (activeFilter && activeFilter !== "All") {
-      filtered = filtered.filter((a) =>
-        (a.scope || "")
-          .toString()
-          .toLowerCase()
-          .includes(activeFilter.toLowerCase())
-      );
-    }
+    loadArticles();
 
-    return filtered;
-  }, [subcategory, selectedMonth, activeFilter]);
+    return () => {
+      mounted = false;
+    };
+  }, [category, subId, page, limit, selectedMonth, activeFilter, lang]); // include lang
 
   // not found early return
-  if (!subcategory) {
+  const noSubFound =
+    !loading && (!articlesData.articles || articlesData.articles.length === 0);
+
+  if (noSubFound) {
     return (
       <div className={styles.wrapper}>
         <Header
-          imageSrc={categoryMeta?.hero || "/images/currentaffairs-hero.png"}
+          imageSrc={
+            (subcategoryMeta &&
+              (subcategoryMeta.logo || subcategoryMeta.hero)) ||
+            categoryMeta?.hero ||
+            "/images/currentaffairs-hero.png"
+          }
           alt="Current Affairs"
         />
         <CategoryHeader
-          title={(categoryMeta && categoryMeta.title) || "Current Affairs"}
+          title={
+            (subcategoryMeta && subcategoryMeta.title) ||
+            (categoryMeta && categoryMeta.title) ||
+            "Current Affairs"
+          }
           languages={[
             { key: "en", label: "English" },
             { key: "hi", label: "Hindi" },
             { key: "te", label: "Telugu" },
           ]}
-          active={localStorage.getItem("bb_lang_code") || "en"}
-          onChange={() => {}}
+          active={lang}
+          onChange={(k) => {
+            try {
+              localStorage.setItem("bb_lang_code", k);
+            } catch {}
+            setLang(k);
+          }}
         />
         <main className={styles.container}>
           <div className={styles.empty}>
             <h2>Not found</h2>
-            <p>Requested subcategory not found.</p>
+            <p>Requested subcategory not found or no articles available.</p>
             <button
               className={styles.backBtn}
               onClick={() => navigate(`/currentaffairs/${category || ""}`)}
@@ -166,10 +387,12 @@ export default function CurrentAffairsArticlesPage() {
     );
   }
 
-  // small helper to open article page
+  // helper: open article page (navigate + pass state)
   function openArticle(a) {
-    navigate(`/currentaffairs/${category}/${subcategory.id}/${a.id}`, {
-      state: { article: a, sub: subcategory },
+    console.log("[ArticlesPage] openArticle ->", a);
+    const aid = a._id || a.id;
+    navigate(`/currentaffairs/${category}/${subId}/${aid}`, {
+      state: { article: a, sub: { id: subId } },
     });
   }
 
@@ -188,7 +411,10 @@ export default function CurrentAffairsArticlesPage() {
     }
   }
 
-  // left widgets data (top N from displayedArticles so it's already filtered)
+  // displayedArticles: already provided by fetch; just slice/copy
+  const displayedArticles = (articlesData.articles || []).slice();
+
+  // left widgets data (top N)
   const leftTop4Data = displayedArticles.slice(0, 4).map((a) => ({
     id: a.id,
     image: a.image || "/images/worldcup.png",
@@ -212,15 +438,19 @@ export default function CurrentAffairsArticlesPage() {
     />
   ));
 
-  // display title: if month selected -> "Month Year — Current Affairs" else default
+  // display title (use subcategory title if available)
   const displayTitle = selectedMonth
     ? `${new Date(selectedMonth + "-01").toLocaleString("en-US", {
         month: "long",
         year: "numeric",
       })} — Current Affairs`
-    : `Today Latest Current Affairs`;
+    : `${
+        (subcategoryMeta && subcategoryMeta.title) ||
+        (categoryMeta && categoryMeta.title) ||
+        "Today Latest Current Affairs"
+      }`;
 
-  // filters list to render above the widgets
+  // filters list to render above the widgets (labels used as q / scope)
   const FILTERS = [
     "All",
     "International",
@@ -232,61 +462,117 @@ export default function CurrentAffairsArticlesPage() {
     "Awards",
   ];
 
-  // handle month click: toggle selectedMonth and update URL (so bookmarking works)
+  // handle month click: toggle selectedMonth and update URL
   function handleMonthClick(monthKey) {
     const newMonth = selectedMonth === monthKey ? null : monthKey;
     setSelectedMonth(newMonth);
 
-    // update URL to include or remove ?month=
-    const basePath = `/currentaffairs/${category}/${subcategory.id}`;
+    const basePath = `/currentaffairs/${category}/${subId}`;
     if (newMonth) {
       navigate(`${basePath}?month=${newMonth}`, { replace: false });
     } else {
       navigate(basePath, { replace: false });
     }
 
-    // scroll top for UX
+    setPage(1);
     const top = document.querySelector(`.${styles.container}`);
     if (top) top.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  // pagination
+  const total = articlesData.meta?.total || 0;
+  const totalPages = Math.max(1, Math.ceil(total / limit));
+
+  function goToPage(p) {
+    const newPage = Math.max(1, Math.min(totalPages, p));
+    if (newPage === page) return;
+    setPage(newPage);
+    const top = document.querySelector(`.${styles.container}`);
+    if (top) top.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // Language selector UI (a small inline filter - sets lang and resets page)
+  const languageOptions = [
+    { key: "en", label: "English" },
+    { key: "hi", label: "Hindi" },
+    { key: "te", label: "Telugu" },
+  ];
+
   return (
     <div className={styles.wrapper}>
-      {/* HERO */}
-      {categoryMeta?.hero ? (
-        <Header
-          imageSrc={categoryMeta.hero}
-          alt={categoryMeta.title || "Category"}
-        />
-      ) : (
-        <Header
-          imageSrc="/images/currentaffairs-hero.png"
-          alt="Current Affairs"
-        />
-      )}
+      {/* HERO uses subcategory image if available */}
+      <Header
+        imageSrc={
+          (subcategoryMeta && (subcategoryMeta.logo || subcategoryMeta.hero)) ||
+          categoryMeta?.hero ||
+          "/images/currentaffairs-hero.png"
+        }
+        alt={
+          (subcategoryMeta && subcategoryMeta.title) ||
+          (categoryMeta && categoryMeta.title) ||
+          "Current Affairs"
+        }
+      />
 
       {/* CATEGORY HEADER */}
       <CategoryHeader
-        title={`${subcategory.title || subId} — Current Affairs`}
-        languages={[
-          { key: "en", label: "English" },
-          { key: "hi", label: "Hindi" },
-          { key: "te", label: "Telugu" },
-        ]}
-        active={localStorage.getItem("bb_lang_code") || "en"}
+        title={`${
+          (subcategoryMeta && subcategoryMeta.title) ||
+          (categoryMeta && categoryMeta.title) ||
+          subId
+        } — Current Affairs`}
+        languages={languageOptions}
+        active={lang}
         onChange={(k) => {
           try {
             localStorage.setItem("bb_lang_code", k);
           } catch {}
+          setLang(k);
+          setPage(1); // reset page when language changes
+          console.log("[ArticlesPage] language changed ->", k);
         }}
         showDivider
       />
+
+      {/* LANGUAGE FILTER (also shows current language and lets users switch) */}
+      {/* <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: 8,
+          margin: "12px 24px 0 24px",
+        }}
+      >
+        {languageOptions.map((opt) => (
+          <button
+            key={opt.key}
+            onClick={() => {
+              setLang(opt.key);
+              try {
+                localStorage.setItem("bb_lang_code", opt.key);
+              } catch {}
+              setPage(1);
+            }}
+            style={{
+              padding: "8px 14px",
+              borderRadius: 10,
+              border: opt.key === lang ? "none" : "1px solid #ddd",
+              background: opt.key === lang ? "#9fbdf0" : "#fff",
+              cursor: "pointer",
+            }}
+            aria-pressed={opt.key === lang}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div> */}
 
       {/* FILTERS (above the two widgets) */}
       <div
         className={styles.filterRow}
         role="tablist"
         aria-label="Article filters"
+        style={{ marginTop: 8 }}
       >
         {FILTERS.map((f) => {
           const active = f === activeFilter;
@@ -299,7 +585,11 @@ export default function CurrentAffairsArticlesPage() {
               className={`${styles.filterPill} ${
                 active ? styles.activePill : ""
               }`}
-              onClick={() => setActiveFilter(f)}
+              onClick={() => {
+                setActiveFilter(f);
+                setPage(1);
+                console.log("[ArticlesPage] filter changed ->", f);
+              }}
             >
               {f}
             </button>
@@ -310,23 +600,72 @@ export default function CurrentAffairsArticlesPage() {
       {/* TWO-WIDGET ROW */}
       <main className={styles.container}>
         <div className={styles.twoWidgetsRow}>
-          {/* LEFT: big widget that renders article nodes (filtered) */}
+          {/* LEFT */}
           <div className={styles.leftWidget}>
             <CurrentAffairsCard
               title={displayTitle}
               color="#f2b6c3"
               topArticleNodes={leftTop4Components}
               style={{ width: "100%", maxWidth: "880px" }}
-            />
+            >
+              <div style={{ marginTop: 16 }}>
+                {loading ? (
+                  <div style={{ padding: 24, color: "#666" }}>
+                    Loading articles...
+                  </div>
+                ) : (
+                  <>
+                    {displayedArticles.map((a) => (
+                      <div key={a.id} style={{ marginBottom: 12 }}>
+                        <CurrentAffairsArticleCard
+                          compact={false}
+                          image={a.image}
+                          title={a.title}
+                          description={a.excerpt || a.body}
+                          dateTime={formatDateShort(a.date)}
+                          category={a.scope}
+                          onClick={() => openArticle(a)}
+                        />
+                      </div>
+                    ))}
+
+                    {/* pagination */}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: 16,
+                      }}
+                    >
+                      <button
+                        onClick={() => goToPage(page - 1)}
+                        disabled={page <= 1}
+                      >
+                        Prev
+                      </button>
+                      <div style={{ padding: "0 12px", alignSelf: "center" }}>
+                        {page} / {totalPages}
+                      </div>
+                      <button
+                        onClick={() => goToPage(page + 1)}
+                        disabled={page >= totalPages}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </CurrentAffairsCard>
           </div>
 
-          {/* RIGHT: monthly widget (only the month list) */}
+          {/* RIGHT: monthly widget */}
           <aside className={styles.rightWidget}>
             <CurrentAffairsCard
               title="Monthly Current Affairs"
               items={
-                months.length
-                  ? months.map((m) => ({
+                articlesData.months && articlesData.months.length
+                  ? articlesData.months.map((m) => ({
                       id: m.key,
                       title: m.label,
                       onClick: () => handleMonthClick(m.key),
@@ -340,6 +679,12 @@ export default function CurrentAffairsArticlesPage() {
           </aside>
         </div>
       </main>
+
+      {error && (
+        <div style={{ color: "crimson", textAlign: "center", marginTop: 12 }}>
+          {error}
+        </div>
+      )}
     </div>
   );
 }

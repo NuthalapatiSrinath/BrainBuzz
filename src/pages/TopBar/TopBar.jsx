@@ -12,9 +12,12 @@ const TOP_NAV = [
     key: "follow",
     label: "Follow Us",
     dropdown: [
-      { label: "Facebook", href: "#" },
-      { label: "Twitter", href: "#" },
-      { label: "Instagram", href: "#" },
+      { label: "Facebook", href: "https://www.facebook.com/brainbuzzakademy" },
+      { label: "Twitter", href: "https://x.com/brainbuzzacadmy" },
+      {
+        label: "Instagram",
+        href: "https://www.instagram.com/brainbuzzacademy/",
+      },
     ],
   },
 ];
